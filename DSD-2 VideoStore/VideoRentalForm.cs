@@ -1,10 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace DSD_2_VideoStore
 {
     //TODO 	Form features
-    // 1.1	DataGridView or ListView(or both)
-    // 1.2	Data entry text boxes or list boxes, and labels
+    // 1.1	DataGridView or ListView(or both) DONE
+    // 1.2	Data entry text boxes or list boxes, and labels DONE
     // 1.3	Buttons or Radio buttons or any other clickable event to manipulate data
     // 1.4	Adequate signage and titles to make it easy to understand.
     //TODO 	Form Operations
@@ -23,11 +24,31 @@ namespace DSD_2_VideoStore
     //TODO 	Database Operations
     // 3.1	Tables and relationships Created and filled with data
 
-    public partial class Form1 : Form
+    public partial class VideoRentalForm : Form
     {
-        public Form1()
+        public VideoRentalForm()
         {
             InitializeComponent();
+            LoadData("");
+            
+        }
+
+
+
+        private void LoadData(string Keyword)
+        {
+            // TODO
+        }
+
+        private void VideoRentalForm_Load(object sender, EventArgs e)
+        {
+            dgvCustomers.CellClick += dgvCustomers_SelectionChanged;
+
+        }
+
+        private void dgvCustomers_SelectionChanged(object sender, EventArgs e)
+        {
+            // TODO
         }
     }
 }

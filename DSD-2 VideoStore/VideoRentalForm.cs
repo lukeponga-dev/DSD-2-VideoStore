@@ -26,29 +26,83 @@ namespace DSD_2_VideoStore
 
     public partial class VideoRentalForm : Form
     {
+        private readonly Database myDatabase = new Database();
+
         public VideoRentalForm()
         {
             InitializeComponent();
-            LoadData("");
-            
+
+            LoadData();
         }
 
-
-
-        private void LoadData(string Keyword)
+        private void dgvCustomers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // TODO
+            var CustID = 0;
+            //these are the cell clicks for the values in the row that you click on
+
+            CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+            txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
+            txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
+            txtAddress.Text = dgvCustomers.Rows[e.RowIndex].Cells[3].Value.ToString();
+            txtPhone.Text = dgvCustomers.Rows[e.RowIndex].Cells[4].Value.ToString();
+
+            if (e.RowIndex >= 0) txtCustID.Text = CustID.ToString();
         }
 
-        private void VideoRentalForm_Load(object sender, EventArgs e)
+        private void dgvMovies_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            dgvCustomers.CellClick += dgvCustomers_SelectionChanged;
+            // displays movie information in textboxes when a cell is clicked
+            myDatabase.MovieID = Convert.ToInt32(dgvMovies.Rows[e.RowIndex].Cells[0].Value.ToString());
+            txtMovieID.Text = myDatabase.MovieID.ToString();
+            txtRating.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
+            txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
+            txtYear.Text = dgvMovies.Rows[e.RowIndex].Cells[3].Value.ToString();
+            txtCopies.Text = dgvMovies.Rows[e.RowIndex].Cells[5].Value.ToString();
+            txtPlot.Text = dgvMovies.Rows[e.RowIndex].Cells[6].Value.ToString();
+            txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[7].Value.ToString();
 
+            myDatabase.MovieReleaseYear = dgvMovies.Rows[e.RowIndex].Cells[3].Value.ToString();
+            txtPrice.Text = myDatabase.RentalCost().ToString();
+            //txtRentalCost.Text = dgvMovies.Rows[e.RowIndex].Cells[4].Value.ToString();
+
+            //           txtRentalsMovieTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
         }
 
-        private void dgvCustomers_SelectionChanged(object sender, EventArgs e)
+        private void DisplayDataGridViewCustomers()
         {
-            // TODO
+            //clear out the old data
+            dgvCustomers.DataSource = null;
+            try
+            {
+                dgvCustomers.DataSource = myDatabase.FillDGVCustomersWithCustomers();
+                //pass the datatable data to the DataGridView
+                dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DisplayDataGridViewMovies()
+        {
+            dgvMovies.DataSource = null;
+            try
+            {
+                dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies();
+                //pass the datatable data to the DataGridView
+                dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void LoadData()
+        {
+            DisplayDataGridViewCustomers();
+            DisplayDataGridViewMovies();
         }
     }
 }

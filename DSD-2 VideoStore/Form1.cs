@@ -139,11 +139,11 @@ namespace DSD_2_VideoStore
                 txtMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
-                txtYear.Text = dgvMovies.Rows[e.RowIndex].Cells[3].Value.ToString();
-                txtRating.Text = dgvMovies.Rows[e.RowIndex].Cells[4].Value.ToString();
+                txtYear.Text = dgvMovies.Rows[e.RowIndex].Cells[4].Value.ToString();
+                txtRating.Text = dgvMovies.Rows[e.RowIndex].Cells[3].Value.ToString();
                 txtPlot.Text = dgvMovies.Rows[e.RowIndex].Cells[5].Value.ToString();
-                txtCopies.Text = dgvMovies.Rows[e.RowIndex].Cells[6].Value.ToString();
-                txtRentalPrice.Text = dgvMovies.Rows[e.RowIndex].Cells[7].Value.ToString();
+                txtCopies.Text = dgvMovies.Rows[e.RowIndex].Cells[7].Value.ToString();
+                txtRentalPrice.Text = dgvMovies.Rows[e.RowIndex].Cells[6].Value.ToString();
             }
             catch (Exception ex)
             {
@@ -154,9 +154,7 @@ namespace DSD_2_VideoStore
         // Customers Add button
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(myDatabase.AddOrUpdateCustomer(txtCustID.Text, txtFirstName.Text, txtLastName.Text,
-                txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
-
+            MessageBox.Show("Customer Add" + myDatabase.AddOrUpdateCustomer(txtCustID.Text, txtFirstName.Text, txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
             tabControl1.SelectedIndex = 0;
             DisplayDataGridViewCustomers();
         }
@@ -164,9 +162,7 @@ namespace DSD_2_VideoStore
         // Customers update button
         private void btnUpdateCustomer_Click(object sender, EventArgs e)
         {
-            myDatabase.AddOrUpdateCustomer(txtCustID.Text, txtFirstName.Text, txtLastName.Text, txtAddress.Text,
-                txtPhone.Text, btnUpdateCustomer.Text);
-
+            MessageBox.Show("Customer Update" + myDatabase.AddOrUpdateCustomer(txtCustID.Text, txtFirstName.Text, txtLastName.Text, txtAddress.Text, txtPhone.Text, btnUpdateCustomer.Text));
             tabControl1.SelectedIndex = 0;
             DisplayDataGridViewCustomers();
         }
@@ -181,15 +177,14 @@ namespace DSD_2_VideoStore
         // Movies add button
         private void btnAddMovie_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnAddMovie.Text));
+            MessageBox.Show("Movie Add " + myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnAddMovie.Text));
             tabControl1.SelectedIndex = 1;
             DisplayDataGridViewMovies();
         }
         // movies update button
         private void btnUpdateMovie_Click(object sender, EventArgs e)
         {
-            myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text,
-                txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnUpdateMovie.Text);
+            MessageBox.Show("Movie Update" + myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnUpdateMovie.Text));
             tabControl1.SelectedIndex = 1;
             DisplayDataGridViewMovies();
         }

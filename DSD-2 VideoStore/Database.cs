@@ -131,7 +131,7 @@ namespace DSD_2_VideoStore
                     Connection.Close();
                 }
 
-                return " Deleted CustomerID #" + CustID + " Successfully";
+                return "Customer ID #" + CustID + " Successfully Deleted";
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace DSD_2_VideoStore
                     Connection.Close();
                 }
 
-                return " Deleted MovieID #" + MovieID + " Successfully";
+                return " Movie ID #" + MovieID + " Successfully Deleted";
             }
             catch (Exception e)
             {

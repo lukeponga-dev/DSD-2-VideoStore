@@ -178,19 +178,28 @@ namespace DSD_2_VideoStore
             tabControl1.SelectedIndex = 0;
             DisplayDataGridViewCustomers();
         }
-
+        // Movies add button
         private void btnAddMovie_Click(object sender, EventArgs e)
         {
             MessageBox.Show(myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnAddMovie.Text));
             tabControl1.SelectedIndex = 1;
             DisplayDataGridViewMovies();
         }
-
+        // movies update button
+        private void btnUpdateMovie_Click(object sender, EventArgs e)
+        {
+            myDatabase.AddOrUpdateMovie(txtMovieID.Text, txtTitle.Text, txtGenre.Text, txtYear.Text, txtRating.Text,
+                txtPlot.Text, txtCopies.Text, txtRentalPrice.Text, btnUpdateMovie.Text);
+            tabControl1.SelectedIndex = 1;
+            DisplayDataGridViewMovies();
+        }
+        // movies delete button
         private void btnDeleteMovie_Click(object sender, EventArgs e)
         {
             MessageBox.Show(myDatabase.DeleteMovies(txtMovieID.Text, btnDeleteCustomer.Text));
             tabControl1.SelectedIndex = 1;
             DisplayDataGridViewMovies();
         }
+
     }
 }

@@ -368,6 +368,7 @@
             this.btnUpdateMovie.TabIndex = 25;
             this.btnUpdateMovie.Text = "Update";
             this.btnUpdateMovie.UseVisualStyleBackColor = false;
+            this.btnUpdateMovie.Click += new System.EventHandler(this.btnUpdateMovie_Click);
             // 
             // txtRating
             // 

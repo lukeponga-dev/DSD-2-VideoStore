@@ -151,7 +151,7 @@
             this.dgvMovies.Name = "dgvMovies";
             this.dgvMovies.Size = new System.Drawing.Size(812, 336);
             this.dgvMovies.TabIndex = 1;
-            this.dgvMovies.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMovies_CellClick);
+            this.dgvMovies.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMovies_CellContentClick);
             // 
             // Rentals
             // 

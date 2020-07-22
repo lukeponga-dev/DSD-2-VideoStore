@@ -11,11 +11,12 @@ namespace DSD_2_VideoStore
         public VideoRentalForm()
         {
             InitializeComponent();
-            LoadData();
+            LoadData(); // Load the DGV
         }
 
         private void LoadData()
         {
+            //load datatable columns
             DisplayDataGridViewCustomers();
             DisplayDataGridViewMovies();
             DisplayDataGridViewRentals();
@@ -28,72 +29,54 @@ namespace DSD_2_VideoStore
 
         private void DisplayDataGridViewCustomers()
         {
-            //clear out old data.
-            dgvCustomers.DataSource = null;
-            try
-            {
-                dgvCustomers.DataSource = myDatabase.FillDGVCustomersWithCustomers();
-                //pass the datatable data to the DataGridView
-                dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvCustomers.DataSource = null; //clear out old data.
+            dgvCustomers.DataSource = myDatabase.FillDGVCustomersWithCustomers(); //pass the datatable data to the DataGridView
+            dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
 
         private void DisplayDataGridViewMovies()
         {
-            //clear out old data.
-            dgvMovies.DataSource = null;
-            try
-            {
-                dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies();
-                //pass the datatable data to the DataGridView
-                dgvMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvMovies.DataSource = null; // clear out old data.
+            dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies(); // pass the datatable data to the DataGridView
+            dgvMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+
         }
 
         private void DisplayDataGridViewRentals()
         {
-            dgvRentals.DataSource = null;
-            try
-            {
-                dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented();
-                dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvRentals.DataSource = null; // clear out old data.
+            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(); // pass the datatable data to the DataGridView
+            dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
         }
 
 
         private void rbAllRented_CheckedChanged(object sender, EventArgs e)
         {
+            // If radio button all rented is checked return movies not returned
             if (rbAllRented.Checked == true)
             {
                 dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView;
+            }
+            else
+            {
+                return;
             }
         }
 
         private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
         {
-            try
+            // If radio button out currently is checked return movies not returned
+            if (rbOutCurrently.Checked == true)
             {
-                if (rbOutCurrently.Checked == true)
-                {
-                    dgvRentals.DataSource = myDatabase.ListOutRentals("%").DefaultView;
-                }
+                dgvRentals.DataSource = myDatabase.DisplayDGVRentalsOutRentals("%").DefaultView;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                return;
             }
+
         }
 
 
@@ -146,7 +129,7 @@ namespace DSD_2_VideoStore
         }
 
         // sends data from datagridview to the textboxes
-        private void dgvMovies_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvMovies_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // the cell clicks for the values in the row that you click on
             try
@@ -187,9 +170,10 @@ namespace DSD_2_VideoStore
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
-                txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
-            tabRentalSystem.SelectedIndex = 0;
-            DisplayDataGridViewCustomers();
+                txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text)); 
+            tabRentalSystem.SelectedIndex = 0; 
+            LoadData();
+
         }
 
         // Customers update button
@@ -198,7 +182,7 @@ namespace DSD_2_VideoStore
             MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
                 txtLastName.Text, txtAddress.Text, txtPhone.Text, btnUpdateCustomer.Text));
             tabRentalSystem.SelectedIndex = 0;
-            DisplayDataGridViewCustomers();
+            LoadData();
         }
 
         // Customers delete button
@@ -206,7 +190,7 @@ namespace DSD_2_VideoStore
         {
             MessageBox.Show(myDatabase.DeleteCustomer(lblCustID.Text, btnDeleteCustomer.Text));
             tabRentalSystem.SelectedIndex = 0;
-            DisplayDataGridViewCustomers();
+            LoadData();
         }
 
         // Movies add button
@@ -215,8 +199,7 @@ namespace DSD_2_VideoStore
             MessageBox.Show(myDatabase.AddOrUpdateMovie(lblMovieID.Text, txtTitle.Text, txtGenre.Text,
                 txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text,
                 btnAddMovie.Text));
-            tabRentalSystem.SelectedIndex = 1;
-            DisplayDataGridViewMovies();
+            tabRentalSystem.SelectedIndex = 1; 
             LoadData();
         }
 
@@ -227,7 +210,6 @@ namespace DSD_2_VideoStore
                 txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text,
                 btnUpdateMovie.Text));
             tabRentalSystem.SelectedIndex = 1;
-            DisplayDataGridViewMovies();
             LoadData();
         }
 
@@ -236,7 +218,6 @@ namespace DSD_2_VideoStore
         {
             MessageBox.Show(myDatabase.DeleteMovies(lblMovieID.Text, btnDeleteCustomer.Text));
             tabRentalSystem.SelectedIndex = 1;
-            DisplayDataGridViewMovies();
             LoadData();
         }
 
@@ -289,5 +270,6 @@ namespace DSD_2_VideoStore
             LoadData();
             lblRMID.Text = @"0";
         }
+
     }
 }

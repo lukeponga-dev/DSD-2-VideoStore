@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 
 namespace DSD_2_VideoStore
 {
@@ -70,6 +72,37 @@ namespace DSD_2_VideoStore
 
             return dt;
         }
+        public DataTable ListOutRentals(string Rentals)
+        {
+            DataTable dt = new DataTable();
+            SqlDataReader SqlReader;
+            try
+            {
+                using (var objCommand = new SqlCommand("select * from RentedMovies where DateReturned is null", Connection))
+                {
+                    objCommand.Parameters.AddWithValue("@RMID", Rentals);
+                    //connect to DB and get SQL
+                    Connection.Open();
+                    SqlReader = objCommand.ExecuteReader();
+                    if (SqlReader.HasRows)
+                    {
+                        dt.Load(SqlReader);
+                    }
+                    Connection.Close();
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Connection.Close();
+                MessageBox.Show(ex.Message);
+                return null;
+
+            }
+
+        }
+
 
         public string AddOrUpdateCustomer(string CustID, string FirstName, string LastName, string Address,
             string Phone, string AddOrUpdate)
@@ -280,5 +313,7 @@ namespace DSD_2_VideoStore
                 return "Return has Failed with " + e;
             }
         }
+
+
     }
 }

@@ -72,21 +72,31 @@ namespace DSD_2_VideoStore
             }
         }
 
-        /*private void DisplayDataGridViewMoviesNOtReturned()
-        {
-            DGVNotReturned.DataSource = null;
 
+        private void rbAllRented_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbAllRented.Checked == true)
+            {
+                dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView;
+            }
+        }
+
+        private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
+        {
             try
             {
-                DGVNotReturned.DataSource = myDatabase.FillDGVNotReturnedwithMovieReturned();
-                DGVNotReturned.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                if (rbOutCurrently.Checked == true)
+                {
+                    dgvRentals.DataSource = myDatabase.ListOutRentals("%").DefaultView;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-        */
+
+
 
         /*private void DisplayDataGridViewTopCustomerView()
         {
@@ -230,13 +240,7 @@ namespace DSD_2_VideoStore
             LoadData();
         }
 
-        private void rbAllRented_CheckedChanged(object sender, EventArgs e)
-        {
-        }
 
-        private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
-        {
-        }
 
         private void btnIssueMovie_Click(object sender, EventArgs e)
         {
@@ -245,7 +249,7 @@ namespace DSD_2_VideoStore
             {
                 myDatabase.Today = DateTime.Now;
                 MessageBox.Show(txtFirstName.Text + "" + txtLastName.Text + @" Date: " + myDatabase.Today + @" " +
-                                myDatabase.IssueMovie(lblCustID.Text, lblMovieID.Text, myDatabase.Today));
+                                myDatabase.IssueMovie(lblMovieID.Text, lblCustID.Text, myDatabase.Today));
                 tabRentalSystem.SelectedIndex = 2;
                 LoadData();
             }

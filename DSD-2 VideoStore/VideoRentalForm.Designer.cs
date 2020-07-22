@@ -36,6 +36,8 @@
             this.Rentals = new System.Windows.Forms.TabPage();
             this.dgvRentals = new System.Windows.Forms.DataGridView();
             this.TopCust_Movies = new System.Windows.Forms.TabPage();
+            this.dgvTopMovies = new System.Windows.Forms.DataGridView();
+            this.dgvTopCustomer = new System.Windows.Forms.DataGridView();
             this.lblRMID = new System.Windows.Forms.Label();
             this.btnReturnMovie = new System.Windows.Forms.Button();
             this.btnIssueMovie = new System.Windows.Forms.Button();
@@ -78,11 +80,9 @@
             this.rbAllRented = new System.Windows.Forms.RadioButton();
             this.rbOutCurrently = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblDateReturned = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
-            this.dgvTopCustomer = new System.Windows.Forms.DataGridView();
-            this.dgvTopMovies = new System.Windows.Forms.DataGridView();
-            this.lblDateReturned = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.tabRentalSystem.SuspendLayout();
             this.Customers.SuspendLayout();
@@ -91,12 +91,12 @@
             this.Rentals.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
             this.TopCust_Movies.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopMovies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopCustomer)).BeginInit();
             this.gbMovie.SuspendLayout();
             this.gbCustomer.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopCustomer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopMovies)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCustomers
@@ -183,6 +183,24 @@
             this.TopCust_Movies.TabIndex = 3;
             this.TopCust_Movies.Text = "TopCustomer/BestMovies";
             this.TopCust_Movies.UseVisualStyleBackColor = true;
+            // 
+            // dgvTopMovies
+            // 
+            this.dgvTopMovies.BackgroundColor = System.Drawing.Color.White;
+            this.dgvTopMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTopMovies.Location = new System.Drawing.Point(444, 23);
+            this.dgvTopMovies.Name = "dgvTopMovies";
+            this.dgvTopMovies.Size = new System.Drawing.Size(332, 304);
+            this.dgvTopMovies.TabIndex = 2;
+            // 
+            // dgvTopCustomer
+            // 
+            this.dgvTopCustomer.BackgroundColor = System.Drawing.Color.White;
+            this.dgvTopCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTopCustomer.Location = new System.Drawing.Point(51, 23);
+            this.dgvTopCustomer.Name = "dgvTopCustomer";
+            this.dgvTopCustomer.Size = new System.Drawing.Size(293, 304);
+            this.dgvTopCustomer.TabIndex = 1;
             // 
             // lblRMID
             // 
@@ -702,10 +720,21 @@
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(367, 438);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(303, 184);
+            this.groupBox2.Size = new System.Drawing.Size(303, 131);
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Rented Movies";
+            // 
+            // lblDateReturned
+            // 
+            this.lblDateReturned.AutoSize = true;
+            this.lblDateReturned.BackColor = System.Drawing.Color.Transparent;
+            this.lblDateReturned.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDateReturned.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblDateReturned.Location = new System.Drawing.Point(7, 115);
+            this.lblDateReturned.Name = "lblDateReturned";
+            this.lblDateReturned.Size = new System.Drawing.Size(0, 17);
+            this.lblDateReturned.TabIndex = 36;
             // 
             // label5
             // 
@@ -726,35 +755,6 @@
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(0, 13);
             this.lblDate.TabIndex = 37;
-            // 
-            // dgvTopCustomer
-            // 
-            this.dgvTopCustomer.BackgroundColor = System.Drawing.Color.White;
-            this.dgvTopCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTopCustomer.Location = new System.Drawing.Point(51, 23);
-            this.dgvTopCustomer.Name = "dgvTopCustomer";
-            this.dgvTopCustomer.Size = new System.Drawing.Size(293, 304);
-            this.dgvTopCustomer.TabIndex = 1;
-            // 
-            // dgvTopMovies
-            // 
-            this.dgvTopMovies.BackgroundColor = System.Drawing.Color.White;
-            this.dgvTopMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTopMovies.Location = new System.Drawing.Point(444, 23);
-            this.dgvTopMovies.Name = "dgvTopMovies";
-            this.dgvTopMovies.Size = new System.Drawing.Size(332, 304);
-            this.dgvTopMovies.TabIndex = 2;
-            // 
-            // lblDateReturned
-            // 
-            this.lblDateReturned.AutoSize = true;
-            this.lblDateReturned.BackColor = System.Drawing.Color.Transparent;
-            this.lblDateReturned.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDateReturned.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblDateReturned.Location = new System.Drawing.Point(7, 115);
-            this.lblDateReturned.Name = "lblDateReturned";
-            this.lblDateReturned.Size = new System.Drawing.Size(0, 17);
-            this.lblDateReturned.TabIndex = 36;
             // 
             // VideoRentalForm
             // 
@@ -779,6 +779,8 @@
             this.Rentals.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).EndInit();
             this.TopCust_Movies.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopMovies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopCustomer)).EndInit();
             this.gbMovie.ResumeLayout(false);
             this.gbMovie.PerformLayout();
             this.gbCustomer.ResumeLayout(false);
@@ -787,8 +789,6 @@
             this.panel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopCustomer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopMovies)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

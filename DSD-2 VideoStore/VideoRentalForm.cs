@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace DSD_2_VideoStore
 {
+    //TODO Add fees for the videos, if videos are older than 5 years (Release Date) then they cost $2 otherwise they cost $5
+    //TODO  View best Customers and Top movies
+
     public partial class VideoRentalForm : Form
     {
         //create an instance of the Database Class
@@ -20,94 +23,63 @@ namespace DSD_2_VideoStore
             DisplayDataGridViewCustomers();
             DisplayDataGridViewMovies();
             DisplayDataGridViewRentals();
-            DisplayDataGridViewBestCustomer();
         }
 
         private void DisplayDataGridViewBestCustomer()
         {
+            dgvTopCustomer.DataSource = null; //Clear all old data
+            try
+            {
+                dgvTopCustomer.DataSource = myDatabase.FindBestCustomers(lblCustID.Text);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void DisplayDataGridViewCustomers()
         {
             dgvCustomers.DataSource = null; //clear out old data.
-            dgvCustomers.DataSource = myDatabase.FillDGVCustomersWithCustomers(); //pass the datatable data to the DataGridView
+            dgvCustomers.DataSource =
+                myDatabase.FillDGVCustomersWithCustomers(); //pass the datatable data to the DataGridView
             dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
         }
 
         private void DisplayDataGridViewMovies()
         {
             dgvMovies.DataSource = null; // clear out old data.
-            dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies(); // pass the datatable data to the DataGridView
-            dgvMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+            try
+            {
+                dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies(); // pass the datatable data to the DataGridView
 
+                dgvMovies.AutoResizeColumn((int)DataGridViewAutoSizeColumnMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DisplayDataGridViewRentals()
         {
             dgvRentals.DataSource = null; // clear out old data.
-            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(); // pass the datatable data to the DataGridView
+            dgvRentals.DataSource =
+                myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(); // pass the datatable data to the DataGridView
             dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            
         }
-
 
         private void rbAllRented_CheckedChanged(object sender, EventArgs e)
         {
             // If radio button all rented is checked return movies not returned
-            if (rbAllRented.Checked == true)
-            {
-                dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView;
-            }
-            else
-            {
-                return;
-            }
+            LoadData();
         }
 
         private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
         {
             // If radio button out currently is checked return movies not returned
-            if (rbOutCurrently.Checked == true)
-            {
-                dgvRentals.DataSource = myDatabase.DisplayDGVRentalsOutRentals("%").DefaultView;
-            }
-            else
-            {
-                return;
-            }
-
+            dgvRentals.DataSource = myDatabase.DisplayDGVRentalsOutRentals("%").DefaultView;
         }
-
-
-
-        /*private void DisplayDataGridViewTopCustomerView()
-        {
-            //DGVMoviesNotReturned.DataSource = null;
-            try
-            {
-                DGVTopCustomers.DataSource = myDatabase.FillDGVTopCustomerswithTopCustomerView();
-                DGVTopCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }*/
-
-        /*private void DisplayDataGridViewTopMovieView()
-        {
-            DGVTopMovies.DataSource = null;
-            try
-            {
-                DGVTopMovies.DataSource = myDatabase.FillDGVTopMovieswithTopMovieView();
-                DGVTopMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }*/
 
         // sends data from datagridview to the textboxes
         private void dgvCustomers_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -131,6 +103,7 @@ namespace DSD_2_VideoStore
         // sends data from datagridview to the textboxes
         private void dgvMovies_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            myDatabase.Today = DateTime.Now;
             // the cell clicks for the values in the row that you click on
             try
             {
@@ -149,6 +122,11 @@ namespace DSD_2_VideoStore
             {
                 MessageBox.Show(ex.Message);
             }
+
+            int thisYear = Convert.ToInt16(DateTime.Now.Date.Year);
+            int year = Convert.ToInt32(txtYear.Text);
+            var fee = myDatabase.FeeCalculation(year, thisYear);
+            txtRentalPrice.Text = @"$" + fee + @" .00";
         }
 
         //Sends data from data grid view to label
@@ -169,11 +147,19 @@ namespace DSD_2_VideoStore
         // Customers Add button
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
-                txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text)); 
-            tabRentalSystem.SelectedIndex = 0; 
-            LoadData();
+            if (txtFirstName.Text != String.Empty &&
+            txtLastName.Text != String.Empty && txtAddress.Text != String.Empty && txtPhone.Text != String.Empty)
+            {
+                MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
+                    txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
+                tabRentalSystem.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show(@"Fill in Customer data!!");
+            }
 
+            LoadData();
         }
 
         // Customers update button
@@ -199,7 +185,7 @@ namespace DSD_2_VideoStore
             MessageBox.Show(myDatabase.AddOrUpdateMovie(lblMovieID.Text, txtTitle.Text, txtGenre.Text,
                 txtYear.Text, txtRating.Text, txtPlot.Text, txtCopies.Text, txtRentalPrice.Text,
                 btnAddMovie.Text));
-            tabRentalSystem.SelectedIndex = 1; 
+            tabRentalSystem.SelectedIndex = 1;
             LoadData();
         }
 
@@ -221,8 +207,6 @@ namespace DSD_2_VideoStore
             LoadData();
         }
 
-
-
         private void btnIssueMovie_Click(object sender, EventArgs e)
         {
             if (lblCustID.Text != @"0" && lblMovieID.Text != @"0")
@@ -231,6 +215,7 @@ namespace DSD_2_VideoStore
                 myDatabase.Today = DateTime.Now;
                 MessageBox.Show(txtFirstName.Text + "" + txtLastName.Text + @" Date: " + myDatabase.Today + @" " +
                                 myDatabase.IssueMovie(lblMovieID.Text, lblCustID.Text, myDatabase.Today));
+
                 tabRentalSystem.SelectedIndex = 2;
                 LoadData();
             }
@@ -238,6 +223,7 @@ namespace DSD_2_VideoStore
             {
                 MessageBox.Show(@"Please select a customer and movie");
             }
+
             LoadData();
             //reset customer fields
             lblCustID.Text = @"0";
@@ -260,16 +246,17 @@ namespace DSD_2_VideoStore
         private void btnReturnMovie_Click(object sender, EventArgs e)
         {
             if (lblDateReturned.Text == string.Empty && lblRMID.Text != @"0")
-            {
                 MessageBox.Show(@"Rental Id: " + lblRMID.Text + "" + myDatabase.ReturnMovie(lblRMID.Text));
-            }
             else
-            {
                 MessageBox.Show(@"Fail");
-            }
             LoadData();
             lblRMID.Text = @"0";
         }
 
+        private void dgvTopCustomer_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            myDatabase.CustID = (int)dgvTopCustomer.Rows[e.RowIndex].Cells[0].Value;
+            lblCustID.Text = myDatabase.CustID.ToString();
+        }
     }
 }

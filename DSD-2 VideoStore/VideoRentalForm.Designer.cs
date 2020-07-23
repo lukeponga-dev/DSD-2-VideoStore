@@ -1,4 +1,6 @@
-﻿namespace DSD_2_VideoStore
+﻿using System;
+
+namespace DSD_2_VideoStore
 {
     partial class VideoRentalForm
     {
@@ -188,9 +190,9 @@
             // 
             this.dgvTopMovies.BackgroundColor = System.Drawing.Color.White;
             this.dgvTopMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTopMovies.Location = new System.Drawing.Point(444, 23);
+            this.dgvTopMovies.Location = new System.Drawing.Point(428, 23);
             this.dgvTopMovies.Name = "dgvTopMovies";
-            this.dgvTopMovies.Size = new System.Drawing.Size(332, 304);
+            this.dgvTopMovies.Size = new System.Drawing.Size(383, 304);
             this.dgvTopMovies.TabIndex = 2;
             // 
             // dgvTopCustomer
@@ -199,8 +201,9 @@
             this.dgvTopCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTopCustomer.Location = new System.Drawing.Point(51, 23);
             this.dgvTopCustomer.Name = "dgvTopCustomer";
-            this.dgvTopCustomer.Size = new System.Drawing.Size(293, 304);
+            this.dgvTopCustomer.Size = new System.Drawing.Size(371, 304);
             this.dgvTopCustomer.TabIndex = 1;
+            this.dgvTopCustomer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTopCustomer_CellContentClick);
             // 
             // lblRMID
             // 
@@ -380,7 +383,6 @@
             this.txtCopies.ForeColor = System.Drawing.Color.Black;
             this.txtCopies.Location = new System.Drawing.Point(260, 121);
             this.txtCopies.Name = "txtCopies";
-            this.txtCopies.ReadOnly = true;
             this.txtCopies.Size = new System.Drawing.Size(53, 21);
             this.txtCopies.TabIndex = 33;
             // 

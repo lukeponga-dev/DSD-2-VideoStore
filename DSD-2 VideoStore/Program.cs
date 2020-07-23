@@ -15,5 +15,10 @@ namespace DSD_2_VideoStore
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new VideoRentalForm());
         }
+
+        public static int Something(int var1, int var2)
+        {
+            return var1 + var2;
+        }
     }
 }

@@ -129,6 +129,15 @@ namespace DSD_2_VideoStore
                 return null;
             }
         }
+        public DataTable GetBestSellingMovies()//get best selling movies method
+        {
+            string Query = "SELECT MovieID, Title, ISNULL((SELECT COUNT (RMID) FROM RentedMovies WHERE MovieIDFK = MovieID), 0) AS TimesRented FROM Movies ORDER BY TimesRented DESC";
+            var dt = new SqlCommand(Query, Connection);
+            DataTable table = new DataTable();
+            da = new SqlDataAdapter(dt);
+            da.Fill(table);
+            return table;
+        }
 
         public DataTable FillOtherDataGridViews(string TableName, string ForeignKey, int ID)
         {

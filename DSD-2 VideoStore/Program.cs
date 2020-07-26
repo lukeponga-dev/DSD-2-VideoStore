@@ -15,7 +15,5 @@ namespace DSD_2_VideoStore
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new VideoRentalForm());
         }
-
-
     }
 }

@@ -9,7 +9,7 @@ namespace DSD_2_VideoStore
     public partial class VideoRentalForm : Form
     {
         //create an instance of the Database Class
-        private Database myDatabase = new Database();
+        private readonly Database myDatabase = new Database();
 
         public VideoRentalForm()
         {
@@ -23,52 +23,41 @@ namespace DSD_2_VideoStore
             DisplayDataGridViewCustomers();
             DisplayDataGridViewMovies();
             DisplayDataGridViewRentals();
-            DisplayDataGridViewBestCustomer();
+            DisplayDataGridViewTopCustomer();
             DisplayDataGridViewBestMovie();
         }
 
-        private void DisplayDataGridViewBestCustomer()
+        private void DisplayDataGridViewTopCustomer()
         {
-            dgvTopCustomer.DataSource = null; //Clear all old data
-            try
-            {
-                dgvTopCustomer.DataSource = myDatabase.FindBestCustomers("%");
-                dgvTopCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            dgvTopCustomer.DataSource = null; //Clear out all old data
+            dgvTopCustomer.DataSource = myDatabase.FillDGVTopCustomersWithTopCustomers(myDatabase.CustID.ToString())
+                .DefaultView;
+            //pass the datatable date to the DataGridView
+            dgvTopCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         public void DisplayDataGridViewBestMovie()
         {
-            dgvTopMovies.DataSource = null;//clear out old data.
-            try
-            {
-                dgvTopMovies.DataSource = myDatabase.GetBestSellingMovies(); //pass the datatable data to the DataGridView
-                dgvTopCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            dgvTopMovies.DataSource = null; //clear out old data.
+            dgvTopMovies.DataSource = myDatabase.FillDGVTopMoviesWithMostRentedMovies(myDatabase.MovieID.ToString())
+                .DefaultView;
+            //pass the datatable data to the DataGridView
+            dgvTopMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void DisplayDataGridViewCustomers()
         {
-
             dgvCustomers.DataSource = null; //clear out old data.
             try
             {
-                dgvCustomers.DataSource = myDatabase.FillDGVCustomersWithCustomers(); //pass the datatable data to the DataGridView
-                dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
+                dgvCustomers.DataSource =
+                    myDatabase.FillDGVCustomersWithCustomers()
+                        .DefaultView; //pass the datatable data to the DataGridView
+                dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                MessageBox.Show(e.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -77,9 +66,10 @@ namespace DSD_2_VideoStore
             dgvMovies.DataSource = null; // clear out old data.
             try
             {
-                dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies(); // pass the datatable data to the DataGridView
+                dgvMovies.DataSource =
+                    myDatabase.FillDGVMoviesWithMovies().DefaultView; // pass the datatable data to the DataGridView
 
-                dgvMovies.AutoResizeColumn((int)DataGridViewAutoSizeColumnMode.AllCells);
+                dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
             catch (Exception ex)
             {
@@ -90,9 +80,18 @@ namespace DSD_2_VideoStore
         private void DisplayDataGridViewRentals()
         {
             dgvRentals.DataSource = null; // clear out old data.
-            dgvRentals.DataSource =
-                myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(); // pass the datatable data to the DataGridView
-            dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            try
+            {
+                dgvRentals.DataSource =
+                    myDatabase
+                        .FillDGVRentalsWithCustomerAndMoviesRented()
+                        .DefaultView; // pass the datatable data to the DataGridView
+                dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void rbAllRented_CheckedChanged(object sender, EventArgs e)
@@ -113,7 +112,7 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
-                myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.CustID = (int) dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -129,12 +128,11 @@ namespace DSD_2_VideoStore
         // sends data from datagridview to the textboxes
         private void dgvMovies_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            myDatabase.Today = DateTime.Now;
             // the cell clicks for the values in the row that you click on
             try
             {
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
-                myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.MovieID = (int) dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -142,18 +140,16 @@ namespace DSD_2_VideoStore
                 txtRating.Text = dgvMovies.Rows[e.RowIndex].Cells[3].Value.ToString();
                 txtPlot.Text = dgvMovies.Rows[e.RowIndex].Cells[5].Value.ToString();
                 txtCopies.Text = dgvMovies.Rows[e.RowIndex].Cells[7].Value.ToString();
-                // txtRentalPrice.Text = dgvMovies.Rows[e.RowIndex].Cells[6].Value.ToString();
+                txtRentalPrice.Text = dgvMovies.Rows[e.RowIndex].Cells[6].Value.ToString();
                 int thisYear = Convert.ToInt16(DateTime.Now.Date.Year);
-                int year = Convert.ToInt32(txtYear.Text);
-                var fee = myDatabase.FeeCalculation(year, thisYear);
-                txtRentalPrice.Text = @"$" + fee + @" .00";
+                var year = Convert.ToInt32(txtYear.Text);
+                var fee = myDatabase.FeeCalculation(year, thisYear).ToString();
+                txtRentalPrice.Text = fee + @" .0000";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-
         }
 
         //Sends data from data grid view to label
@@ -161,7 +157,7 @@ namespace DSD_2_VideoStore
         {
             try
             {
-                myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.RMID = (int) dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
                 lblDate.Text = dgvRentals.Rows[e.RowIndex].Cells[3].Value.ToString();
                 lblDateReturned.Text = dgvRentals.Rows[e.RowIndex].Cells[4].Value.ToString();
@@ -175,8 +171,8 @@ namespace DSD_2_VideoStore
         // Customers Add button
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            if (txtFirstName.Text != String.Empty &&
-            txtLastName.Text != String.Empty && txtAddress.Text != String.Empty && txtPhone.Text != String.Empty)
+            if (txtFirstName.Text != string.Empty &&
+                txtLastName.Text != string.Empty && txtAddress.Text != string.Empty && txtPhone.Text != string.Empty)
             {
                 MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
                     txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
@@ -283,14 +279,10 @@ namespace DSD_2_VideoStore
 
         private void dgvTopCustomer_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            myDatabase.CustID = (int) dgvTopCustomer.Rows[e.RowIndex].Cells[0].Value;
-            lblCustID.Text = myDatabase.CustID.ToString();
         }
 
         private void dgvTopMovies_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            myDatabase.MovieID = (int)dgvTopMovies.Rows[e.RowIndex].Cells[0].Value;
-            lblMovieID.Text = myDatabase.MovieID.ToString();
         }
     }
 }

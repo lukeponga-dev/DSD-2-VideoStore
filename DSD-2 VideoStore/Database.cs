@@ -7,19 +7,20 @@ namespace DSD_2_VideoStore
 {
     public class Database
     {
-        //Create a Connection, Command, Adapter
         private readonly SqlCommand Command = new SqlCommand();
 
+        //Create a Connection, Command, and an Adapter
         private readonly SqlConnection Connection = new SqlConnection(); // connect to db
 
         private SqlDataAdapter da = new SqlDataAdapter(); // hold the results
 
-        //Connection to the Database
+        // constructor sets the default upon loading the class
         public Database()
         {
+            //Data Source=DESKTOP-BOJJVGV\SQLDB;Initial Catalog=VideoRental;Integrated Security=True;
             //change the connection string to your db
             var connectionString =
-                @"Data Source=DESKTOP-BOJJVGV\SQLEXPRESS;Initial Catalog=VideoRental;Integrated Security=True;";
+                @"Data Source=DESKTOP-BOJJVGV\SQLDB;Initial Catalog=VideoRental;Integrated Security=True;";
             Connection.ConnectionString = connectionString;
             Command.Connection = Connection;
         }
@@ -32,127 +33,150 @@ namespace DSD_2_VideoStore
         //Takes all data from Customers
         public DataTable FillDGVCustomersWithCustomers()
         {
+            //create data-table
             var dt = new DataTable();
-            using (da = new SqlDataAdapter("select * from Customer", Connection))
-            {
-                //connect to DB and get SQL
-                Connection.Open();
-                da.Fill(dt);
-                Connection.Close();
-            }
-
-            return dt;
-        }
-
-        //Takes all data from Movies
-        public DataTable FillDGVMoviesWithMovies()
-        {
-            var dt = new DataTable();
-
-            using (da = new SqlDataAdapter("select * from Movies", Connection))
-            {
-                //connect to DB and get SQL
-                Connection.Open();
-                da.Fill(dt);
-                Connection.Close();
-            }
-
-            return dt;
-        }
-
-        //Takes all data from Rented Movies
-        public DataTable FillDGVRentalsWithCustomerAndMoviesRented()
-        {
-            var dt = new DataTable();
-
-            using (da = new SqlDataAdapter("select * from RentedMovies Order by RMID", Connection))
-            {
-                //connect to DB and get SQL
-                Connection.Open();
-                da.Fill(dt);
-                Connection.Close();
-            }
-
-            return dt;
-        }
-
-        public DataTable DisplayDGVRentalsOutRentals(string Rentals)
-        {
-            var dt = new DataTable();
-            SqlDataReader SqlReader;
             try
             {
-                using (var objCommand =
-                    new SqlCommand("select * from RentedMovies where DateReturned is null", Connection))
+                using (da = new SqlDataAdapter("select * from Customer", Connection))
                 {
-                    objCommand.Parameters.AddWithValue("@RMID", Rentals);
-                    //connect to DB and get SQL
-                    Connection.Open();
-                    SqlReader = objCommand.ExecuteReader();
-                    if (SqlReader.HasRows) dt.Load(SqlReader);
-
-                    Connection.Close();
+                    //connect into DB and get the SQL
+                    Connection.Open(); //open a connection to the B
+                    da.Fill(dt); //fill the data-table from the SQL
+                    Connection.Close(); //close the connection
                 }
-
-                return dt;
             }
             catch (Exception ex)
             {
                 //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
                 Connection.Close();
                 MessageBox.Show(ex.Message);
-                return null;
             }
+
+            return dt; //pass the datatable data to the DataGridView
         }
 
-        public DataTable FindBestCustomers(string BestCustomers)//find best customers method
+        //Takes all data from Movies
+        public DataTable FillDGVMoviesWithMovies()
         {
+            //create data-table
             var dt = new DataTable();
-            SqlDataReader sqlReader;
             try
             {
-                using (var objCommand = new SqlCommand("SELECT *, ISNULL((SELECT COUNT(RMID) FROM RentedMovies WHERE CustIDFK = CustID), 0) AS RentedMovies FROM Customer ORDER BY RentedMovies DESC", Connection))
+                using (da = new SqlDataAdapter("select * from Movies", Connection))
                 {
-                    objCommand.Parameters.AddWithValue("@CustID", BestCustomers);
-                    Connection.Open();
-                    sqlReader = objCommand.ExecuteReader();
-                    if (sqlReader.HasRows) dt.Load(sqlReader);
-
-                    Connection.Close();
+                    //connect into DB and get the SQL
+                    Connection.Open(); //open a connection to the B
+                    da.Fill(dt); //fill the data-table from the SQL
+                    Connection.Close(); //close the connection
                 }
-                return dt;
             }
             catch (Exception ex)
             {
+                //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
                 Connection.Close();
                 MessageBox.Show(ex.Message);
-                return null;
             }
-        }
-        public DataTable GetBestSellingMovies()//get best selling movies method
-        {
-            string Query = "SELECT MovieID, Title, ISNULL((SELECT COUNT (RMID) FROM RentedMovies WHERE MovieIDFK = MovieID), 0) AS TimesRented FROM Movies ORDER BY TimesRented DESC";
-            var dt = new SqlCommand(Query, Connection);
-            DataTable table = new DataTable();
-            da = new SqlDataAdapter(dt);
-            da.Fill(table);
-            return table;
+            return dt; //pass the data-table data to the DataGridView
         }
 
-        public DataTable FillOtherDataGridViews(string TableName, string ForeignKey, int ID)
+        //Takes all data from Rented Movies
+        public DataTable FillDGVRentalsWithCustomerAndMoviesRented()
         {
-            DataTable dt = new DataTable(); // temp table to hold data
-
-            string query = "select * from " + TableName + " where " + ForeignKey + "=" + ID;
-
-            using (da = new SqlDataAdapter(query, Connection))
+            //create data-table
+            var dt = new DataTable();
+            try
             {
-                // connect to DB and get SQL
-                Connection.Open();
-
-                da.Fill(dt);
-
+                using (da = new SqlDataAdapter("select * from RentedMovies Order by RMID", Connection))
+                {
+                    //connect into DB and get the SQL
+                    Connection.Open(); //open a connection to the B
+                    da.Fill(dt); //fill the data-table from the SQL
+                    Connection.Close(); //close the connection
+                }
+            }
+            catch (Exception ex)
+            {
+                //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
                 Connection.Close();
+                MessageBox.Show(ex.Message);
+            }
+            return dt; //pass the data-table data to the DataGridView
+        }
+
+        public DataTable DisplayDGVRentalsOutRentals(string Rentals)
+        {
+            var dt = new DataTable();
+            try
+            {
+                using (var objCommand = new SqlCommand("select RMID, MovieIDFK, CustIDFK, DateRented, DateReturned from CustomersAndMoviesRented where DateReturned is null", Connection))
+                {
+                    objCommand.Parameters.AddWithValue("@RMID", Rentals);
+                    //connect to DB and get SQL
+                    Connection.Open();
+                    var reader = objCommand.ExecuteReader();
+                    if (reader.HasRows) dt.Load(reader);
+                    reader.Close();
+                    Connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
+                Connection.Close();
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
+
+        //Fill TopCustomers with TopCustomers View method
+        public DataTable FillDGVTopCustomersWithTopCustomers(string TotalRented)
+        {
+            var dt = new DataTable();
+            try
+            {
+                using (var objCommand = new SqlCommand("SELECT CustID, [First Name], [Last Name], [Total Rented] FROM TopCustomers ORDER BY [Total Rented] DESC", Connection))
+                {
+                    objCommand.Parameters.AddWithValue("@CustID", TotalRented);
+                    Connection.Open();
+                    var reader = objCommand.ExecuteReader();
+                    if (reader.HasRows) dt.Load(reader);
+                    reader.Close();
+                    Connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
+                Connection.Close();
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
+
+        public DataTable FillDGVTopMoviesWithMostRentedMovies(string TotalTimesRented) //get best selling movies method
+        {
+            // string Query = "SELECT MovieID, Title, ISNULL((SELECT COUNT (RMID) FROM RentedMovies
+            // WHERE MovieIDFK = MovieID), 0) AS TimesRented FROM Movies ORDER BY TimesRented DESC";
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlCommand objCommand =
+                    new SqlCommand("SELECT MovieID, [Movie Title], [Total Times Rented] FROM MostRentedMovies",
+                        Connection))
+                {
+                    objCommand.Parameters.AddWithValue("@MovieID", TotalTimesRented);
+                    Connection.Open();
+                    var reader = objCommand.ExecuteReader();
+                    if (reader.HasRows) dt.Load(reader);
+                    reader.Close();
+                    Connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //need to get it to close a second time it jumps the first connection.close if ExecuteReader fails.
+                Connection.Close();
+                MessageBox.Show(ex.Message);
             }
 
             return dt;
@@ -168,19 +192,21 @@ namespace DSD_2_VideoStore
                 {
                     //Create a object and open a connection to SQL Server
                     var query =
-                        "INSERT INTO Customer (FirstName, LastName, Address, Phone) VALUES  (@FirstName, @LastName, @Address, @Phone)";
+                        "INSERT INTO Customer (FirstName, LastName, Address, Phone) VALUES (@FirstName, @LastName, @Address, @Phone)";
 
-                    var objCommand = new SqlCommand(query, Connection);
-                    //use parameters to prevent SQL injections
-                    objCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                    objCommand.Parameters.AddWithValue("@LastName", LastName);
-                    objCommand.Parameters.AddWithValue("@Address", Address);
-                    objCommand.Parameters.AddWithValue("@Phone", Phone);
-                    //create and open DB Connection
-                    Connection.Open();
-                    // add in the SQL
-                    objCommand.ExecuteNonQuery();
-                    Connection.Close();
+                    using (var objCommand = new SqlCommand(query, Connection))
+                    {
+                        //use parameters to prevent SQL injections
+                        objCommand.Parameters.AddWithValue("@FirstName", FirstName);
+                        objCommand.Parameters.AddWithValue("@LastName", LastName);
+                        objCommand.Parameters.AddWithValue("@Address", Address);
+                        objCommand.Parameters.AddWithValue("@Phone", Phone);
+                        //create and open DB Connection
+                        Connection.Open();
+                        // add in the SQL
+                        objCommand.ExecuteNonQuery();
+                        Connection.Close();
+                    }
                 }
 
                 // update gets passed through the parameter
@@ -189,18 +215,20 @@ namespace DSD_2_VideoStore
                     //Create a object and open a connection to SQL Server
                     var query =
                         "UPDATE Customer set FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone  where CustID = @CustID";
-                    var objCommand = new SqlCommand(query, Connection);
-                    //use parameters to prevent SQL injections
-                    objCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                    objCommand.Parameters.AddWithValue("@LastName", LastName);
-                    objCommand.Parameters.AddWithValue("@Address", Address);
-                    objCommand.Parameters.AddWithValue("@Phone", Phone);
-                    objCommand.Parameters.AddWithValue("@CustID", CustID);
-                    //create and open DB Connection
-                    Connection.Open();
-                    // add in the SQL
-                    objCommand.ExecuteNonQuery();
-                    Connection.Close();
+                    using (var objCommand = new SqlCommand(query, Connection))
+                    {
+                        //use parameters to prevent SQL injections
+                        objCommand.Parameters.AddWithValue("@FirstName", FirstName);
+                        objCommand.Parameters.AddWithValue("@LastName", LastName);
+                        objCommand.Parameters.AddWithValue("@Address", Address);
+                        objCommand.Parameters.AddWithValue("@Phone", Phone);
+                        objCommand.Parameters.AddWithValue("@CustID", CustID);
+                        //create and open DB Connection
+                        Connection.Open();
+                        // add in the SQL
+                        objCommand.ExecuteNonQuery();
+                        Connection.Close();
+                    }
                 }
 
                 return AddOrUpdate + " is Successful";
@@ -310,15 +338,15 @@ namespace DSD_2_VideoStore
                 {
                     //Create a object and open a connection to SQL Server
                     // this puts the parameters into the code so that the data in the text boxes is added to thedatabase
-                    var query = "DELETE FROM Movies where MovieID = @MovieID";
-                    var objCommand = new SqlCommand(query, Connection);
-                    // create params to prevent SQL injections
-                    objCommand.Parameters.AddWithValue("MovieID", MovieID);
-                    //create and open DB Connection
-                    Connection.Open();
-                    objCommand
-                        .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                    Connection.Close(); //close connection to DB
+                    using (SqlCommand objCommand = new SqlCommand("DELETE FROM Movies where MovieID = @MovieID", Connection))
+                    {
+                        // create params to prevent SQL injections
+                        objCommand.Parameters.AddWithValue("@MovieID", MovieID);
+                        //create and open DB Connection
+                        Connection.Open();
+                        objCommand.ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
+                        Connection.Close(); //close connection to DB
+                    }
                 }
 
                 return " Movie ID #" + MovieID + " Successfully Deleted";
@@ -327,7 +355,8 @@ namespace DSD_2_VideoStore
             {
                 // need to get it to close a second time if it jumps the first connection.close
                 Connection.Close();
-                return " Failed " + e;
+                MessageBox.Show(e.Message);
+                return null;
             }
         }
 
@@ -393,7 +422,12 @@ namespace DSD_2_VideoStore
 
             if (difference > 5)
                 return 2;
-            return 5;
+            else if (difference < 5)
+            {
+                return 5;
+            }
+
+            return difference;
         }
     }
 }

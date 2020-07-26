@@ -6,11 +6,12 @@ namespace VideoStoreUnitTest
     [TestClass]
     public class VideoStoreTests
     {
-        Database myDatabase = new Database();
+        private Database myDatabase = new Database();
+
         [TestMethod]
         public void TestMethod1()
         {
-            
+            var CustID = myDatabase.CustID;
         }
     }
 }

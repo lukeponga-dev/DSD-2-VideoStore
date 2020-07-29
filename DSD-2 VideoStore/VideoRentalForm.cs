@@ -48,50 +48,25 @@ namespace DSD_2_VideoStore
         private void DisplayDataGridViewCustomers()
         {
             dgvCustomers.DataSource = null; //clear out old data.
-            try
-            {
-                dgvCustomers.DataSource =
-                    myDatabase.FillDGVCustomersWithCustomers()
-                        .DefaultView; //pass the datatable data to the DataGridView
-                dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvCustomers.DataSource =
+                    myDatabase.FillDGVCustomersWithCustomers().DefaultView; //pass the datatable data to the DataGridView
+            dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void DisplayDataGridViewMovies()
         {
             dgvMovies.DataSource = null; // clear out old data.
-            try
-            {
-                dgvMovies.DataSource =
+            dgvMovies.DataSource =
                     myDatabase.FillDGVMoviesWithMovies().DefaultView; // pass the datatable data to the DataGridView
 
-                dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void DisplayDataGridViewRentals()
         {
             dgvRentals.DataSource = null; // clear out old data.
-            try
-            {
-                dgvRentals.DataSource =
-                    myDatabase
-                        .FillDGVRentalsWithCustomerAndMoviesRented()
-                        .DefaultView; // pass the datatable data to the DataGridView
-                dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView; // pass the datatable data to the DataGridView
+            dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void rbAllRented_CheckedChanged(object sender, EventArgs e)
@@ -112,7 +87,7 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
-                myDatabase.CustID = (int) dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -132,7 +107,7 @@ namespace DSD_2_VideoStore
             try
             {
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
-                myDatabase.MovieID = (int) dgvMovies.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -157,7 +132,7 @@ namespace DSD_2_VideoStore
         {
             try
             {
-                myDatabase.RMID = (int) dgvRentals.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
                 lblDate.Text = dgvRentals.Rows[e.RowIndex].Cells[3].Value.ToString();
                 lblDateReturned.Text = dgvRentals.Rows[e.RowIndex].Cells[4].Value.ToString();

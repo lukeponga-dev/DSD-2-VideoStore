@@ -7,10 +7,10 @@ namespace DSD_2_VideoStore
 {
     public class Database
     {
-        private readonly SqlCommand Command = new SqlCommand();
+        private SqlCommand Command = new SqlCommand();
 
         //Create a Connection, Command, and an Adapter
-        private readonly SqlConnection Connection = new SqlConnection(); // connect to db
+        private SqlConnection Connection = new SqlConnection(); // connect to db
 
         private SqlDataAdapter da = new SqlDataAdapter(); // hold the results
 

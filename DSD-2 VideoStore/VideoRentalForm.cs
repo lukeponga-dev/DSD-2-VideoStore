@@ -49,7 +49,7 @@ namespace DSD_2_VideoStore
         {
             dgvCustomers.DataSource = null; //clear out old data.
             dgvCustomers.DataSource =
-                    myDatabase.FillDGVCustomersWithCustomers().DefaultView; //pass the datatable data to the DataGridView
+                myDatabase.FillDGVCustomersWithCustomers().DefaultView; //pass the datatable data to the DataGridView
             dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -57,7 +57,7 @@ namespace DSD_2_VideoStore
         {
             dgvMovies.DataSource = null; // clear out old data.
             dgvMovies.DataSource =
-                    myDatabase.FillDGVMoviesWithMovies().DefaultView; // pass the datatable data to the DataGridView
+                myDatabase.FillDGVMoviesWithMovies().DefaultView; // pass the datatable data to the DataGridView
 
             dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
@@ -88,11 +88,11 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
-                string newvalue = dgvCustomers.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                this.Text = "Row : " + e.RowIndex.ToString() + " Col : " + e.ColumnIndex.ToString() + " Value = " +
-                            newvalue;
+                var newvalue = dgvCustomers.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                Text = "Row : " + e.RowIndex + " Col : " + e.ColumnIndex + " Value = " +
+                       newvalue;
                 //pass data to the text boxes
-                myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.CustID = (int) dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -111,11 +111,11 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
-                string newvalue = dgvMovies.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                this.Text = "Row : " + e.RowIndex.ToString() + " Col : " + e.ColumnIndex.ToString() + " Value = " +
-                            newvalue;
+                var newvalue = dgvMovies.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                Text = "Row : " + e.RowIndex + " Col : " + e.ColumnIndex + " Value = " +
+                       newvalue;
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
-                myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.MovieID = (int) dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -140,7 +140,7 @@ namespace DSD_2_VideoStore
         {
             try
             {
-                myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.RMID = (int) dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
             }
             catch (Exception ex)
@@ -152,35 +152,33 @@ namespace DSD_2_VideoStore
         // Customers Add button
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            if (txtFirstName.Text != string.Empty &&
-                txtLastName.Text != string.Empty && txtAddress.Text != string.Empty && txtPhone.Text != string.Empty)
-            {
-                MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
-                    txtLastName.Text, txtAddress.Text, txtPhone.Text, btnAddCustomer.Text));
-                tabRentalSystem.SelectedIndex = 0;
-            }
-            else
-            {
-                MessageBox.Show(@"Fill in Customer data!!");
-            }
-
+            //Adds a customer to the database
+            MessageBox.Show(myDatabase.AddCustomer(txtFirstName.Text, txtLastName.Text, txtAddress.Text,
+                txtPhone.Text));
             LoadData();
         }
 
-        // Customers update button
+        // Customers Update Button
         private void btnUpdateCustomer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(myDatabase.AddOrUpdateCustomer(lblCustID.Text, txtFirstName.Text,
-                txtLastName.Text, txtAddress.Text, txtPhone.Text, btnUpdateCustomer.Text));
-            tabRentalSystem.SelectedIndex = 0;
+            //Changes the details of a selected customer
+            MessageBox.Show(myDatabase.UpdateCustomer(txtFirstName.Text, txtLastName.Text, txtAddress.Text,
+                txtPhone.Text,
+                lblCustID.Text));
             LoadData();
         }
 
         // Customers delete button
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(myDatabase.DeleteCustomer(lblCustID.Text, btnDeleteCustomer.Text));
-            tabRentalSystem.SelectedIndex = 0;
+            //Deletes the details of the selected customer
+            MessageBox.Show(myDatabase.DeleteCustomer(lblCustID.Text));
+            //Clear out the fields to entirely remove the customer data
+            lblCustID.Text = "";
+            txtFirstName.Text = "";
+            txtLastName.Text = "";
+            txtAddress.Text = "";
+            txtPhone.Text = "";
             LoadData();
         }
 

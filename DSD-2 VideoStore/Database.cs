@@ -149,93 +149,67 @@ namespace DSD_2_VideoStore
             return dt;
         }
 
-        public string AddOrUpdateCustomer(string CustID, string FirstName, string LastName, string Address,
-            string Phone, string AddOrUpdate)
+        //MODIFICATIONS TO CUSTOMER TABLE
+
+        public string AddCustomer(string FirstName, string LastName, string Address, string Phone)
         {
-            try
+            using (var queryCommand = new SqlCommand("INSERT INTO Customer (FirstName, LastName, Address, Phone) " +
+                                                     "VALUES (@FirstName, @LastName, @Address, @Phone)", Connection))
             {
-                //Add gets passed through the parameter
-                if (AddOrUpdate == "Add")
-                {
-                    //Create a object and open a connection to SQL Server
-                    var query =
-                        "INSERT INTO Customer (FirstName, LastName, Address, Phone) VALUES (@FirstName, @LastName, @Address, @Phone)";
-
-                    using (var objCommand = new SqlCommand(query, Connection))
-                    {
-                        //use parameters to prevent SQL injections
-                        objCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                        objCommand.Parameters.AddWithValue("@LastName", LastName);
-                        objCommand.Parameters.AddWithValue("@Address", Address);
-                        objCommand.Parameters.AddWithValue("@Phone", Phone);
-                        //create and open DB Connection
-                        Connection.Open();
-                        // add in the SQL
-                        objCommand.ExecuteNonQuery();
-                        Connection.Close();
-                    }
-                }
-
-                // update gets passed through the parameter
-                else if (AddOrUpdate == "Update")
-                {
-                    //Create a object and open a connection to SQL Server
-                    var query =
-                        "UPDATE Customer set FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone  where CustID = @CustID";
-                    using (var objCommand = new SqlCommand(query, Connection))
-                    {
-                        //use parameters to prevent SQL injections
-                        objCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                        objCommand.Parameters.AddWithValue("@LastName", LastName);
-                        objCommand.Parameters.AddWithValue("@Address", Address);
-                        objCommand.Parameters.AddWithValue("@Phone", Phone);
-                        objCommand.Parameters.AddWithValue("@CustID", CustID);
-                        //create and open DB Connection
-                        Connection.Open();
-                        // add in the SQL
-                        objCommand.ExecuteNonQuery();
-                        Connection.Close();
-                    }
-                }
-
-                return AddOrUpdate + " is Successful";
-            }
-            catch (Exception e)
-            {
-                //need to get it to close a second time it jumps the first connection.close if ExecuteNonQuery fails.
+                //use parameters to prevent SQL injections
+                queryCommand.Parameters.AddWithValue("@FirstName", FirstName);
+                queryCommand.Parameters.AddWithValue("@LastName", LastName);
+                queryCommand.Parameters.AddWithValue("@Address", Address);
+                queryCommand.Parameters.AddWithValue("@Phone", Phone); 
+                //create and open DB Connection
+                Connection.Open();
+                // add in the SQL
+                queryCommand.ExecuteNonQuery();
+                // close the connection
                 Connection.Close();
-                return " has failed with " + e;
+
+                return "Add is Successful";
             }
         }
-
-        public string DeleteCustomer(string CustID, string DeleteCust)
+        public string UpdateCustomer(string FirstName, string LastName, string Address, string Phone, string ID)
         {
-            try
+            //Update the customer's details
+            using (var queryCommand = new SqlCommand("UPDATE Customer " +
+                                                     "SET FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone " +
+                                                     "WHERE CustID = @ID", Connection))
             {
-                //Delete gets passed through the parameter
-                if (DeleteCust == "Delete")
-                {
-                    //Create a object and open a connection to SQL Server
-                    var query = "DELETE FROM Customer where CustID = @CustID";
-                    var objCommand = new SqlCommand(query, Connection);
-                    //use parameters to prevent SQL injections
-                    objCommand.Parameters.AddWithValue("CustID", CustID);
-                    //create and open DB Connection
-                    Connection.Open();
-                    objCommand.ExecuteNonQuery();
-                    Connection.Close();
-                }
-
-                return "Customer ID #" + CustID + " Successfully Deleted";
-            }
-            catch (Exception e)
-            {
-                //need to get it to close a second time it jumps the first connection.close if ExecuteNonQuery fails.
+                //use parameters to prevent SQL injections
+                queryCommand.Parameters.AddWithValue("@FirstName", FirstName);
+                queryCommand.Parameters.AddWithValue("@LastName", LastName);
+                queryCommand.Parameters.AddWithValue("@Address", Address);
+                queryCommand.Parameters.AddWithValue("@Phone", Phone);
+                queryCommand.Parameters.AddWithValue("@ID", Convert.ToInt16(ID));
+                //create and open DB Connection
+                Connection.Open();
+                // add in the SQL
+                queryCommand.ExecuteNonQuery();
+                // close the connection
                 Connection.Close();
-                return " Failed " + e;
+
+                return "Update is Successful";
             }
+
         }
 
+        public string DeleteCustomer(string ID)
+        {
+            //Remove the customer from the database
+            using (var queryCommand = new SqlCommand("DELETE FROM Customer WHERE CustID = @ID", Connection))
+            {
+                //use parameters to prevent SQL injections
+                queryCommand.Parameters.AddWithValue("@ID", Convert.ToInt16(ID));
+                Connection.Open();
+                queryCommand.ExecuteNonQuery();
+                Connection.Close();
+
+                return "Delete is Successful";
+            }
+        }
         public string AddOrUpdateMovie(string MovieID, string Title, string Genre, string Year, string Rating,
             string Plot, string Copies, string Rental_Cost, string AddOrUpdate)
         {

@@ -65,7 +65,8 @@ namespace DSD_2_VideoStore
         private void DisplayDataGridViewRentals()
         {
             dgvRentals.DataSource = null; // clear out old data.
-            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView; // pass the datatable data to the DataGridView
+            //pass the datatable to the datagridview
+            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(rbOutCurrently.Checked);
             dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -78,7 +79,7 @@ namespace DSD_2_VideoStore
         private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
         {
             // If radio button out currently is checked return movies not returned
-            dgvRentals.DataSource = myDatabase.DisplayDGVRentalsOutRentals("%").DefaultView;
+            LoadData();
         }
 
         // sends data from datagridview to the textboxes
@@ -87,6 +88,10 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
+                string newvalue = dgvCustomers.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                this.Text = "Row : " + e.RowIndex.ToString() + " Col : " + e.ColumnIndex.ToString() + " Value = " +
+                            newvalue;
+                //pass data to the text boxes
                 myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
@@ -106,6 +111,9 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
+                string newvalue = dgvMovies.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                this.Text = "Row : " + e.RowIndex.ToString() + " Col : " + e.ColumnIndex.ToString() + " Value = " +
+                            newvalue;
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
                 myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
@@ -134,8 +142,6 @@ namespace DSD_2_VideoStore
             {
                 myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
-                lblDate.Text = dgvRentals.Rows[e.RowIndex].Cells[3].Value.ToString();
-                lblDateReturned.Text = dgvRentals.Rows[e.RowIndex].Cells[4].Value.ToString();
             }
             catch (Exception ex)
             {

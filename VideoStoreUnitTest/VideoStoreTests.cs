@@ -1,4 +1,5 @@
-﻿using DSD_2_VideoStore;
+﻿using System.Data;
+using DSD_2_VideoStore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
 
@@ -7,21 +8,17 @@ namespace VideoStoreUnitTest
     [TestClass]
     public class VideoStoreTests
     {
-        private Database obj = new Database();
+        //create an instance of the Database Class
+        private Database myDatabase = new Database();
 
+        //Testing the connection to the database is getting data
         [TestMethod]
-        public void TestMethod1()
+        public void TestConnection()
         {
-            SqlConnection Connection = new SqlConnection();
-            Connection.Open();
+            Assert.IsInstanceOfType(myDatabase.FillDGVCustomersWithCustomers(), typeof(DataTable));
         }
 
         [TestMethod]
-        public void MovieCost()
-        {
-            var connection = @"Data Source = DESKTOP - BOJJVGV\SQLDB; Initial Catalog = VideoRental; Integrated Security = True; ";
-            var expect = connection;
-            Assert.AreEqual(connection, expect);
-        }
+        public void 
     }
 }

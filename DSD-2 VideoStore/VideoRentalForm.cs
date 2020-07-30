@@ -30,43 +30,82 @@ namespace DSD_2_VideoStore
         private void DisplayDataGridViewTopCustomer()
         {
             dgvTopCustomer.DataSource = null; //Clear out all old data
-            dgvTopCustomer.DataSource = myDatabase.FillDGVTopCustomersWithTopCustomers(myDatabase.CustID.ToString())
-                .DefaultView;
-            //pass the datatable date to the DataGridView
-            dgvTopCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            try
+            {
+                dgvTopCustomer.DataSource = myDatabase.FillDGVTopCustomersWithTopCustomers(myDatabase.CustID.ToString())
+                    .DefaultView;
+                //pass the datatable date to the DataGridView
+                dgvTopCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void DisplayDataGridViewBestMovie()
         {
             dgvTopMovies.DataSource = null; //clear out old data.
-            dgvTopMovies.DataSource = myDatabase.FillDGVTopMoviesWithMostRentedMovies(myDatabase.MovieID.ToString())
-                .DefaultView;
-            //pass the datatable data to the DataGridView
-            dgvTopMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            try
+            {
+                dgvTopMovies.DataSource = myDatabase.FillDGVTopMoviesWithMostRentedMovies(myDatabase.MovieID.ToString())
+                    .DefaultView;
+                //pass the datatable data to the DataGridView
+                dgvTopMovies.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DisplayDataGridViewCustomers()
         {
-            dgvCustomers.DataSource = null; //clear out old data.
-            dgvCustomers.DataSource =
-                    myDatabase.FillDGVCustomersWithCustomers().DefaultView; //pass the datatable data to the DataGridView
-            dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            //Clear out the old data
+            dgvCustomers.DataSource = null;
+            try
+            {
+                //Pass the datatable to the DataGridView
+                dgvCustomers.DataSource = myDatabase.FillDGVCustomerWithCustomers();
+                dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DisplayDataGridViewMovies()
         {
-            dgvMovies.DataSource = null; // clear out old data.
-            dgvMovies.DataSource =
-                    myDatabase.FillDGVMoviesWithMovies().DefaultView; // pass the datatable data to the DataGridView
-
-            dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            //Clear out the old data
+            dgvMovies.DataSource = null;
+            try
+            {
+                //Pass the datatable to the DataGridView
+                dgvMovies.DataSource = myDatabase.FillDGVMoviesWithMovies();
+                dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DisplayDataGridViewRentals()
         {
-            dgvRentals.DataSource = null; // clear out old data.
-            dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented().DefaultView; // pass the datatable data to the DataGridView
-            dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            //Clear out the old data
+            dgvRentals.DataSource = null;
+            try
+            {
+                //Pass the datatable to the DataGridView
+
+                dgvRentals.DataSource = myDatabase.FillDGVRentalsWithCustomerAndMoviesRented(rbOutCurrently.Checked);
+                dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void rbAllRented_CheckedChanged(object sender, EventArgs e)
@@ -78,7 +117,7 @@ namespace DSD_2_VideoStore
         private void rbOutCurrently_CheckedChanged(object sender, EventArgs e)
         {
             // If radio button out currently is checked return movies not returned
-            dgvRentals.DataSource = myDatabase.DisplayDGVRentalsOutRentals("%").DefaultView;
+            LoadData();
         }
 
         // sends data from datagridview to the textboxes
@@ -134,8 +173,6 @@ namespace DSD_2_VideoStore
             {
                 myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
-                lblDate.Text = dgvRentals.Rows[e.RowIndex].Cells[3].Value.ToString();
-                lblDateReturned.Text = dgvRentals.Rows[e.RowIndex].Cells[4].Value.ToString();
             }
             catch (Exception ex)
             {

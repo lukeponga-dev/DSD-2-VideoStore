@@ -92,7 +92,7 @@ namespace DSD_2_VideoStore
                 Text = "Row : " + e.RowIndex + " Col : " + e.ColumnIndex + " Value = " +
                        newvalue;
                 //pass data to the text boxes
-                myDatabase.CustID = (int) dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -115,7 +115,7 @@ namespace DSD_2_VideoStore
                 Text = "Row : " + e.RowIndex + " Col : " + e.ColumnIndex + " Value = " +
                        newvalue;
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
-                myDatabase.MovieID = (int) dgvMovies.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -140,7 +140,7 @@ namespace DSD_2_VideoStore
         {
             try
             {
-                myDatabase.RMID = (int) dgvRentals.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
             }
             catch (Exception ex)

@@ -11,6 +11,7 @@ namespace DSD_2_VideoStore
 
         //Create connection and Command and an Adapter
         private readonly SqlConnection Connection = new SqlConnection(); // connect to db
+
         private SqlDataAdapter da = new SqlDataAdapter(); // hold the results
 
         public Database()
@@ -70,13 +71,9 @@ namespace DSD_2_VideoStore
             //if the radio button is pressed
             string query;
             if (OutOnly)
-            {
                 query = "SELECT * FROM RentedMovies WHERE DateReturned IS NULL";
-            }
             else
-            {
                 query = "SELECT * FROM RentedMovies";
-            }
             using (da = new SqlDataAdapter(query, Connection))
             {
                 //connect into DB and get the SQL
@@ -89,7 +86,6 @@ namespace DSD_2_VideoStore
 
             return dt; //pass the data to the DataGridView
         }
-
 
         //Fill TopCustomers with TopCustomers View method
         public DataTable FillDGVTopCustomersWithTopCustomers(string TotalRented)
@@ -160,7 +156,7 @@ namespace DSD_2_VideoStore
                 queryCommand.Parameters.AddWithValue("@FirstName", FirstName);
                 queryCommand.Parameters.AddWithValue("@LastName", LastName);
                 queryCommand.Parameters.AddWithValue("@Address", Address);
-                queryCommand.Parameters.AddWithValue("@Phone", Phone); 
+                queryCommand.Parameters.AddWithValue("@Phone", Phone);
                 //create and open DB Connection
                 Connection.Open();
                 // add in the SQL
@@ -171,6 +167,7 @@ namespace DSD_2_VideoStore
                 return "Add is Successful";
             }
         }
+
         public string UpdateCustomer(string FirstName, string LastName, string Address, string Phone, string ID)
         {
             //Update the customer's details
@@ -193,7 +190,6 @@ namespace DSD_2_VideoStore
 
                 return "Update is Successful";
             }
-
         }
 
         public string DeleteCustomer(string ID)
@@ -210,6 +206,7 @@ namespace DSD_2_VideoStore
                 return "Delete is Successful";
             }
         }
+
         public string AddOrUpdateMovie(string MovieID, string Title, string Genre, string Year, string Rating,
             string Plot, string Copies, string Rental_Cost, string AddOrUpdate)
         {

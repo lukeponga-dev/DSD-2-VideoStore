@@ -92,17 +92,6 @@ namespace DSD_2_VideoStore
             return dt;
         }
 
-        // public DataTable DisplayDGVRentalsOutRentals(string Rentals) { var dt = new DataTable();
-        // try { using (var objCommand = new SqlCommand( "select RMID, MovieIDFK, CustIDFK,
-        // DateRented, DateReturned from CustomersAndMoviesRented where DateReturned is null",
-        // Connection)) { objCommand.Parameters.AddWithValue("@RMID", Rentals); //connect to DB and
-        // get SQL Connection.Open(); var reader = objCommand.ExecuteReader(); if (reader.HasRows)
-        // dt.Load(reader); reader.Close(); Connection.Close(); } } catch (Exception ex) { //need to
-        // get it to close a second time it jumps the first connection.close if ExecuteReader fails.
-        // Connection.Close(); MessageBox.Show(ex.Message); }
-        //
-        // return dt; }
-
         //Fill TopCustomers with TopCustomers View method
         public DataTable FillDGVTopCustomersWithTopCustomers(string TotalRented)
         {
@@ -373,17 +362,6 @@ namespace DSD_2_VideoStore
             }
         }
 
-        //Calculate fee based on age of movie
-        // public int FeeCalculation(int year, int thisYear)
-        // {
-        //     var difference = thisYear - year;
-        //
-        //     if (difference > 5)
-        //         return 2;
-        //     if (difference < 5) return 5;
-        //
-        //     return difference;
-        // }
         public int GetRentalCost(string Year)
         {
             //Rental cost is $2 if the release year is more than 5 years ago

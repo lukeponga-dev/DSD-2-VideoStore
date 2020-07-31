@@ -3,9 +3,6 @@ using System.Windows.Forms;
 
 namespace DSD_2_VideoStore
 {
-    //TODO Add fees for the videos, if videos are older than 5 years (Release Date) then they cost $2 otherwise they cost $5
-    //TODO  View best Customers and Top movies
-
     public partial class VideoRentalForm : Form
     {
         //create an instance of the Database Class
@@ -125,7 +122,7 @@ namespace DSD_2_VideoStore
             // the cell clicks for the values in the row that you click on
             try
             {
-                myDatabase.CustID = (int) dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.CustID = (int)dgvCustomers.Rows[e.RowIndex].Cells[0].Value;
                 lblCustID.Text = myDatabase.CustID.ToString();
                 txtFirstName.Text = dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtLastName.Text = dgvCustomers.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -145,7 +142,7 @@ namespace DSD_2_VideoStore
             try
             {
                 //NOTE I have changed the default table cell column positions to: Title =1, Genre =2, Rating =3, Year =4, Plot =5, Rental_Cost =6, Copies =7
-                myDatabase.MovieID = (int) dgvMovies.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.MovieID = (int)dgvMovies.Rows[e.RowIndex].Cells[0].Value;
                 lblMovieID.Text = myDatabase.MovieID.ToString();
                 txtTitle.Text = dgvMovies.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtGenre.Text = dgvMovies.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -167,7 +164,7 @@ namespace DSD_2_VideoStore
         {
             try
             {
-                myDatabase.RMID = (int) dgvRentals.Rows[e.RowIndex].Cells[0].Value;
+                myDatabase.RMID = (int)dgvRentals.Rows[e.RowIndex].Cells[0].Value;
                 lblRMID.Text = myDatabase.RMID.ToString();
             }
             catch (Exception ex)

@@ -82,11 +82,11 @@ namespace DSD_2_VideoStore
             this.rbAllRented = new System.Windows.Forms.RadioButton();
             this.rbOutCurrently = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblDateReturned = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblDateReturned = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.tabRentalSystem.SuspendLayout();
             this.Customers.SuspendLayout();
@@ -196,7 +196,6 @@ namespace DSD_2_VideoStore
             this.dgvTopMovies.Name = "dgvTopMovies";
             this.dgvTopMovies.Size = new System.Drawing.Size(383, 304);
             this.dgvTopMovies.TabIndex = 2;
-            this.dgvTopMovies.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTopMovies_CellContentClick);
             // 
             // dgvTopCustomer
             // 
@@ -206,7 +205,6 @@ namespace DSD_2_VideoStore
             this.dgvTopCustomer.Name = "dgvTopCustomer";
             this.dgvTopCustomer.Size = new System.Drawing.Size(371, 304);
             this.dgvTopCustomer.TabIndex = 1;
-            this.dgvTopCustomer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTopCustomer_CellContentClick);
             // 
             // lblRMID
             // 
@@ -421,6 +419,7 @@ namespace DSD_2_VideoStore
             this.txtRentalPrice.Location = new System.Drawing.Point(260, 74);
             this.txtRentalPrice.Multiline = true;
             this.txtRentalPrice.Name = "txtRentalPrice";
+            this.txtRentalPrice.ReadOnly = true;
             this.txtRentalPrice.Size = new System.Drawing.Size(53, 24);
             this.txtRentalPrice.TabIndex = 29;
             // 
@@ -733,6 +732,36 @@ namespace DSD_2_VideoStore
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Rented Movies";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(44, 111);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(122, 25);
+            this.label10.TabIndex = 38;
+            this.label10.Text = "Date Rented:";
+            this.label10.Visible = false;
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(172, 119);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(0, 13);
+            this.lblDate.TabIndex = 37;
+            this.lblDate.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 141);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(140, 25);
+            this.label7.TabIndex = 37;
+            this.label7.Text = "Date Returned:";
+            this.label7.Visible = false;
+            // 
             // lblDateReturned
             // 
             this.lblDateReturned.AutoSize = true;
@@ -743,6 +772,7 @@ namespace DSD_2_VideoStore
             this.lblDateReturned.Name = "lblDateReturned";
             this.lblDateReturned.Size = new System.Drawing.Size(0, 13);
             this.lblDateReturned.TabIndex = 36;
+            this.lblDateReturned.Visible = false;
             // 
             // label5
             // 
@@ -755,33 +785,6 @@ namespace DSD_2_VideoStore
             this.label5.Size = new System.Drawing.Size(132, 17);
             this.label5.TabIndex = 36;
             this.label5.Text = "Rented Movie ID:";
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(172, 119);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(0, 13);
-            this.lblDate.TabIndex = 37;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(26, 141);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(140, 25);
-            this.label7.TabIndex = 37;
-            this.label7.Text = "Date Returned:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(44, 111);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(122, 25);
-            this.label10.TabIndex = 38;
-            this.label10.Text = "Date Rented:";
             // 
             // VideoRentalForm
             // 

@@ -19,8 +19,7 @@ namespace DSD_2_VideoStore
         {
             //change the connection string to your db
             var connectionString =
-                @"Data Source=DESKTOP-BOJJVGV\SQLDB;Initial Catalog=VideoRental;Integrated Security=True;";
-
+                @"Data Source=DESKTOP-BOJJVGV\MYLAPTOP;Initial Catalog=VideoRental;Integrated Security=True";
             Connection.ConnectionString = connectionString;
             Command.Connection = Connection;
         }
@@ -112,6 +111,7 @@ namespace DSD_2_VideoStore
             return dt;
         }
 
+        //Fill TopMovies with TopMovies View method
         public DataTable FillDGVTopMoviesWithMostRentedMovies(string TotalTimesRented) //get best selling movies method
         {
             var dt = new DataTable();

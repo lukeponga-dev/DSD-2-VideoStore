@@ -236,7 +236,8 @@ namespace DSD_2_VideoStore
 
             {
                 myDatabase.Today = DateTime.Now;
-                MessageBox.Show(txtFirstName.Text + "" + txtLastName.Text + @" Date: " + myDatabase.Today + @" " +
+                MessageBox.Show(txtFirstName.Text + string.Empty + txtLastName.Text + @" Date: " + myDatabase.Today +
+                                @" " +
                                 myDatabase.IssueMovie(lblMovieID.Text, lblCustID.Text, myDatabase.Today));
 
                 tabRentalSystem.SelectedIndex = 2;
@@ -250,26 +251,26 @@ namespace DSD_2_VideoStore
             LoadData();
             //reset customer fields
             lblCustID.Text = @"0";
-            txtFirstName.Text = "";
-            txtLastName.Text = "";
-            txtAddress.Text = "";
-            txtPhone.Text = "";
+            txtFirstName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtAddress.Text = string.Empty;
+            txtPhone.Text = string.Empty;
 
             //reset movie fields
             lblMovieID.Text = @"0";
-            txtTitle.Text = "";
-            txtGenre.Text = "";
-            txtYear.Text = "";
-            txtRating.Text = "";
-            txtPlot.Text = "";
-            txtCopies.Text = "";
-            txtRentalPrice.Text = "";
+            txtTitle.Text = string.Empty;
+            txtGenre.Text = string.Empty;
+            txtYear.Text = string.Empty;
+            txtRating.Text = string.Empty;
+            txtPlot.Text = string.Empty;
+            txtCopies.Text = string.Empty;
+            txtRentalPrice.Text = string.Empty;
         }
 
         private void btnReturnMovie_Click(object sender, EventArgs e)
         {
             if (lblDateReturned.Text == string.Empty && lblRMID.Text != @"0")
-                MessageBox.Show(@"Rental Id: " + lblRMID.Text + "" +
+                MessageBox.Show(@"Rental Id: " + lblRMID.Text + string.Empty +
                                 myDatabase.ReturnMovie(lblRMID.Text, myDatabase.Today));
             else
                 MessageBox.Show(@"Fail");

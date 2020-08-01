@@ -87,6 +87,9 @@ namespace DSD_2_VideoStore
             this.label7 = new System.Windows.Forms.Label();
             this.lblDateReturned = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.tabRentalSystem.SuspendLayout();
             this.Customers.SuspendLayout();
@@ -179,6 +182,8 @@ namespace DSD_2_VideoStore
             // 
             // TopCust_Movies
             // 
+            this.TopCust_Movies.Controls.Add(this.label14);
+            this.TopCust_Movies.Controls.Add(this.label12);
             this.TopCust_Movies.Controls.Add(this.dgvTopMovies);
             this.TopCust_Movies.Controls.Add(this.dgvTopCustomer);
             this.TopCust_Movies.Location = new System.Drawing.Point(4, 22);
@@ -192,18 +197,18 @@ namespace DSD_2_VideoStore
             // 
             this.dgvTopMovies.BackgroundColor = System.Drawing.Color.White;
             this.dgvTopMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTopMovies.Location = new System.Drawing.Point(428, 23);
+            this.dgvTopMovies.Location = new System.Drawing.Point(407, 43);
             this.dgvTopMovies.Name = "dgvTopMovies";
-            this.dgvTopMovies.Size = new System.Drawing.Size(383, 304);
+            this.dgvTopMovies.Size = new System.Drawing.Size(401, 284);
             this.dgvTopMovies.TabIndex = 2;
             // 
             // dgvTopCustomer
             // 
             this.dgvTopCustomer.BackgroundColor = System.Drawing.Color.White;
             this.dgvTopCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTopCustomer.Location = new System.Drawing.Point(16, 23);
+            this.dgvTopCustomer.Location = new System.Drawing.Point(16, 42);
             this.dgvTopCustomer.Name = "dgvTopCustomer";
-            this.dgvTopCustomer.Size = new System.Drawing.Size(371, 304);
+            this.dgvTopCustomer.Size = new System.Drawing.Size(355, 285);
             this.dgvTopCustomer.TabIndex = 1;
             // 
             // lblRMID
@@ -324,7 +329,7 @@ namespace DSD_2_VideoStore
             // 
             // gbMovie
             // 
-            this.gbMovie.BackColor = System.Drawing.Color.White;
+            this.gbMovie.BackColor = System.Drawing.Color.PaleTurquoise;
             this.gbMovie.Controls.Add(this.lblMovieID);
             this.gbMovie.Controls.Add(this.label6);
             this.gbMovie.Controls.Add(this.txtCopies);
@@ -346,9 +351,9 @@ namespace DSD_2_VideoStore
             this.gbMovie.Controls.Add(this.txtPlot);
             this.gbMovie.Font = new System.Drawing.Font("Segoe UI", 13F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbMovie.ForeColor = System.Drawing.Color.Black;
-            this.gbMovie.Location = new System.Drawing.Point(13, 308);
+            this.gbMovie.Location = new System.Drawing.Point(12, 308);
             this.gbMovie.Name = "gbMovie";
-            this.gbMovie.Size = new System.Drawing.Size(338, 362);
+            this.gbMovie.Size = new System.Drawing.Size(338, 351);
             this.gbMovie.TabIndex = 33;
             this.gbMovie.TabStop = false;
             this.gbMovie.Text = "Movie Details";
@@ -371,7 +376,7 @@ namespace DSD_2_VideoStore
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(208, 101);
+            this.label6.Location = new System.Drawing.Point(141, 52);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(105, 17);
             this.label6.TabIndex = 34;
@@ -382,7 +387,7 @@ namespace DSD_2_VideoStore
             this.txtCopies.BackColor = System.Drawing.Color.White;
             this.txtCopies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCopies.ForeColor = System.Drawing.Color.Black;
-            this.txtCopies.Location = new System.Drawing.Point(260, 121);
+            this.txtCopies.Location = new System.Drawing.Point(252, 54);
             this.txtCopies.Name = "txtCopies";
             this.txtCopies.Size = new System.Drawing.Size(53, 21);
             this.txtCopies.TabIndex = 33;
@@ -393,7 +398,7 @@ namespace DSD_2_VideoStore
             this.lblRentalPrice.BackColor = System.Drawing.Color.Transparent;
             this.lblRentalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRentalPrice.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblRentalPrice.Location = new System.Drawing.Point(216, 52);
+            this.lblRentalPrice.Location = new System.Drawing.Point(149, 27);
             this.lblRentalPrice.Name = "lblRentalPrice";
             this.lblRentalPrice.Size = new System.Drawing.Size(97, 17);
             this.lblRentalPrice.TabIndex = 32;
@@ -416,7 +421,7 @@ namespace DSD_2_VideoStore
             this.txtRentalPrice.BackColor = System.Drawing.Color.White;
             this.txtRentalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRentalPrice.ForeColor = System.Drawing.Color.Black;
-            this.txtRentalPrice.Location = new System.Drawing.Point(260, 74);
+            this.txtRentalPrice.Location = new System.Drawing.Point(252, 24);
             this.txtRentalPrice.Multiline = true;
             this.txtRentalPrice.Name = "txtRentalPrice";
             this.txtRentalPrice.ReadOnly = true;
@@ -428,7 +433,7 @@ namespace DSD_2_VideoStore
             this.btnDeleteMovie.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnDeleteMovie.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDeleteMovie.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteMovie.Location = new System.Drawing.Point(188, 267);
+            this.btnDeleteMovie.Location = new System.Drawing.Point(188, 233);
             this.btnDeleteMovie.Name = "btnDeleteMovie";
             this.btnDeleteMovie.Size = new System.Drawing.Size(139, 35);
             this.btnDeleteMovie.TabIndex = 27;
@@ -453,7 +458,7 @@ namespace DSD_2_VideoStore
             this.btnUpdateMovie.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnUpdateMovie.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnUpdateMovie.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateMovie.Location = new System.Drawing.Point(188, 226);
+            this.btnUpdateMovie.Location = new System.Drawing.Point(188, 192);
             this.btnUpdateMovie.Name = "btnUpdateMovie";
             this.btnUpdateMovie.Size = new System.Drawing.Size(139, 35);
             this.btnUpdateMovie.TabIndex = 25;
@@ -501,7 +506,7 @@ namespace DSD_2_VideoStore
             this.lblPlot.BackColor = System.Drawing.Color.Transparent;
             this.lblPlot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlot.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblPlot.Location = new System.Drawing.Point(6, 245);
+            this.lblPlot.Location = new System.Drawing.Point(11, 246);
             this.lblPlot.Name = "lblPlot";
             this.lblPlot.Size = new System.Drawing.Size(36, 17);
             this.lblPlot.TabIndex = 18;
@@ -512,7 +517,7 @@ namespace DSD_2_VideoStore
             this.btnAddMovie.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnAddMovie.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAddMovie.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddMovie.Location = new System.Drawing.Point(188, 184);
+            this.btnAddMovie.Location = new System.Drawing.Point(188, 151);
             this.btnAddMovie.Name = "btnAddMovie";
             this.btnAddMovie.Size = new System.Drawing.Size(139, 36);
             this.btnAddMovie.TabIndex = 16;
@@ -569,16 +574,16 @@ namespace DSD_2_VideoStore
             this.txtPlot.BackColor = System.Drawing.Color.White;
             this.txtPlot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPlot.ForeColor = System.Drawing.Color.Black;
-            this.txtPlot.Location = new System.Drawing.Point(22, 267);
+            this.txtPlot.Location = new System.Drawing.Point(14, 270);
             this.txtPlot.Multiline = true;
             this.txtPlot.Name = "txtPlot";
             this.txtPlot.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtPlot.Size = new System.Drawing.Size(158, 80);
+            this.txtPlot.Size = new System.Drawing.Size(225, 68);
             this.txtPlot.TabIndex = 22;
             // 
             // gbCustomer
             // 
-            this.gbCustomer.BackColor = System.Drawing.Color.White;
+            this.gbCustomer.BackColor = System.Drawing.Color.PaleTurquoise;
             this.gbCustomer.Controls.Add(this.lblCustID);
             this.gbCustomer.Controls.Add(this.label8);
             this.gbCustomer.Controls.Add(this.btnDeleteCustomer);
@@ -678,7 +683,7 @@ namespace DSD_2_VideoStore
             // 
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFormTitle.Location = new System.Drawing.Point(6, 9);
+            this.lblFormTitle.Location = new System.Drawing.Point(33, 9);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(344, 32);
             this.lblFormTitle.TabIndex = 1;
@@ -689,7 +694,7 @@ namespace DSD_2_VideoStore
             this.rbAllRented.AutoSize = true;
             this.rbAllRented.Checked = true;
             this.rbAllRented.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbAllRented.Location = new System.Drawing.Point(199, 44);
+            this.rbAllRented.Location = new System.Drawing.Point(198, 54);
             this.rbAllRented.Name = "rbAllRented";
             this.rbAllRented.Size = new System.Drawing.Size(79, 17);
             this.rbAllRented.TabIndex = 0;
@@ -702,7 +707,7 @@ namespace DSD_2_VideoStore
             // 
             this.rbOutCurrently.AutoSize = true;
             this.rbOutCurrently.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbOutCurrently.Location = new System.Drawing.Point(199, 67);
+            this.rbOutCurrently.Location = new System.Drawing.Point(199, 78);
             this.rbOutCurrently.Name = "rbOutCurrently";
             this.rbOutCurrently.Size = new System.Drawing.Size(95, 17);
             this.rbOutCurrently.TabIndex = 1;
@@ -713,6 +718,7 @@ namespace DSD_2_VideoStore
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.PowderBlue;
+            this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.lblDate);
             this.groupBox2.Controls.Add(this.label7);
@@ -725,9 +731,9 @@ namespace DSD_2_VideoStore
             this.groupBox2.Controls.Add(this.btnIssueMovie);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 13F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(367, 438);
+            this.groupBox2.Location = new System.Drawing.Point(367, 435);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(303, 172);
+            this.groupBox2.Size = new System.Drawing.Size(302, 159);
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Rented Movies";
@@ -735,9 +741,10 @@ namespace DSD_2_VideoStore
             // label10
             // 
             this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(44, 111);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(122, 25);
+            this.label10.Size = new System.Drawing.Size(69, 14);
             this.label10.TabIndex = 38;
             this.label10.Text = "Date Rented:";
             this.label10.Visible = false;
@@ -745,19 +752,20 @@ namespace DSD_2_VideoStore
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(172, 119);
+            this.lblDate.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(119, 111);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(0, 13);
+            this.lblDate.Size = new System.Drawing.Size(0, 14);
             this.lblDate.TabIndex = 37;
             this.lblDate.Visible = false;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(26, 141);
+            this.label7.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(34, 127);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(140, 25);
+            this.label7.Size = new System.Drawing.Size(79, 14);
             this.label7.TabIndex = 37;
             this.label7.Text = "Date Returned:";
             this.label7.Visible = false;
@@ -766,11 +774,11 @@ namespace DSD_2_VideoStore
             // 
             this.lblDateReturned.AutoSize = true;
             this.lblDateReturned.BackColor = System.Drawing.Color.Transparent;
-            this.lblDateReturned.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDateReturned.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDateReturned.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblDateReturned.Location = new System.Drawing.Point(172, 147);
+            this.lblDateReturned.Location = new System.Drawing.Point(119, 127);
             this.lblDateReturned.Name = "lblDateReturned";
-            this.lblDateReturned.Size = new System.Drawing.Size(0, 13);
+            this.lblDateReturned.Size = new System.Drawing.Size(0, 14);
             this.lblDateReturned.TabIndex = 36;
             this.lblDateReturned.Visible = false;
             // 
@@ -786,12 +794,44 @@ namespace DSD_2_VideoStore
             this.label5.TabIndex = 36;
             this.label5.Text = "Rented Movie ID:";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Arial", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(196, 29);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(81, 15);
+            this.label13.TabIndex = 37;
+            this.label13.Text = "Filter Movies:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.Green;
+            this.label12.Location = new System.Drawing.Point(138, 23);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(105, 16);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Top Customers:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.Green;
+            this.label14.Location = new System.Drawing.Point(577, 24);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(83, 16);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Top Movies:";
+            // 
             // VideoRentalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AliceBlue;
-            this.ClientSize = new System.Drawing.Size(1212, 688);
+            this.ClientSize = new System.Drawing.Size(1212, 677);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbCustomer);
@@ -808,6 +848,7 @@ namespace DSD_2_VideoStore
             this.Rentals.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).EndInit();
             this.TopCust_Movies.ResumeLayout(false);
+            this.TopCust_Movies.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTopMovies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTopCustomer)).EndInit();
             this.gbMovie.ResumeLayout(false);
@@ -881,5 +922,8 @@ namespace DSD_2_VideoStore
         private System.Windows.Forms.Label lblDateReturned;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
     }
 }

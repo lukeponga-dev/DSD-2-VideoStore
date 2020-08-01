@@ -7,12 +7,10 @@ namespace DSD_2_VideoStore
 {
     public class Database
     {
-        private readonly SqlCommand Command = new SqlCommand();
-
         //Create connection and Command and an Adapter
-        private readonly SqlConnection Connection = new SqlConnection();
-
-        private SqlDataAdapter da = new SqlDataAdapter();
+        private readonly SqlCommand _command = new SqlCommand();
+        private readonly SqlConnection _connection = new SqlConnection();
+        private SqlDataAdapter _da = new SqlDataAdapter();
 
         // constructor sets the default upon loading the class
         public Database()
@@ -20,185 +18,185 @@ namespace DSD_2_VideoStore
             //change the connection string to your db
             var connectionString =
                 @"Data Source=DESKTOP-BOJJVGV\MYLAPTOP;Initial Catalog=VideoRental;Integrated Security=True";
-            Connection.ConnectionString = connectionString;
-            Command.Connection = Connection;
+            _connection.ConnectionString = connectionString;
+            _command.Connection = _connection;
         }
 
         //PROPERTIES
-        public int CustID { get; set; }
+        public int CustId { get; set; }
 
-        public int MovieID { get; set; }
-        public int RMID { get; set; }
+        public int MovieId { get; set; }
+        public int Rmid { get; set; }
         public DateTime Today { get; set; }
 
         //Takes all data from Customers
-        public DataTable FillDGVCustomerWithCustomers()
+        public DataTable FillDgvCustomerWithCustomers()
         {
             //Create a datatable
             var dt = new DataTable();
-            using (da = new SqlDataAdapter("SELECT * from Customer", Connection))
+            using (_da = new SqlDataAdapter("SELECT * from Customer", _connection))
             {
                 //Get results of query
-                Connection.Open();
+                _connection.Open();
                 //Fill the table from the Database
-                da.Fill(dt);
+                _da.Fill(dt);
                 //Close the connection
-                Connection.Close();
+                _connection.Close();
             }
 
             return dt;
         }
 
         //Takes all data from Movies
-        public DataTable FillDGVMoviesWithMovies()
+        public DataTable FillDgvMoviesWithMovies()
         {
             //Create a datatable
             var dt = new DataTable();
-            using (da = new SqlDataAdapter("SELECT * from Movies", Connection))
+            using (_da = new SqlDataAdapter("SELECT * from Movies", _connection))
             {
                 //Get results of query
-                Connection.Open();
+                _connection.Open();
                 //Fill the table from the Database
-                da.Fill(dt);
+                _da.Fill(dt);
                 //Close the connection
-                Connection.Close();
+                _connection.Close();
             }
 
             return dt;
         }
 
         //Takes all data from Rented Movies
-        public DataTable FillDGVRentalsWithCustomerAndMoviesRented(bool Outonly)
+        public DataTable FillDgvRentalsWithCustomerAndMoviesRented(bool outonly)
         {
             //create a datatable
             var dt = new DataTable();
             //If the radio button is pressed
             string sqlQuery;
-            if (Outonly)
+            if (outonly)
                 sqlQuery = "SELECT * FROM CustomersAndMoviesRented WHERE DateReturned IS NULL";
             else
                 sqlQuery = "SELECT * FROM CustomersAndMoviesRented";
-            using (da = new SqlDataAdapter(sqlQuery, Connection))
+            using (_da = new SqlDataAdapter(sqlQuery, _connection))
             {
                 //Get results of query
-                Connection.Open();
+                _connection.Open();
                 //Fill the table from the Database
-                da.Fill(dt);
+                _da.Fill(dt);
                 //Close the connection
-                Connection.Close();
+                _connection.Close();
             }
 
             return dt;
         }
 
         //Fill TopCustomers with TopCustomers View method
-        public DataTable FillDGVTopCustomersWithTopCustomers(string TotalRented)
+        public DataTable FillDgvTopCustomersWithTopCustomers(string totalRented)
         {
             var dt = new DataTable();
 
             using (var objCommand =
                 new SqlCommand(
                     "SELECT CustID, [First Name], [Last Name], [Total Rented] FROM TopCustomers ORDER BY [Total Rented] DESC",
-                    Connection))
+                    _connection))
             {
-                objCommand.Parameters.AddWithValue("@CustID", TotalRented);
-                Connection.Open();
+                objCommand.Parameters.AddWithValue("@CustID", totalRented);
+                _connection.Open();
                 var reader = objCommand.ExecuteReader();
                 if (reader.HasRows) dt.Load(reader);
-                Connection.Close();
+                _connection.Close();
             }
 
             return dt;
         }
 
         //Fill TopMovies with TopMovies View method
-        public DataTable FillDGVTopMoviesWithMostRentedMovies(string TotalTimesRented) //get best selling movies method
+        public DataTable FillDgvTopMoviesWithMostRentedMovies(string totalTimesRented) //get best selling movies method
         {
             var dt = new DataTable();
             using (var objCommand =
                 new SqlCommand("SELECT MovieID, [Movie Title], [Total Times Rented] FROM MostRentedMovies",
-                    Connection))
+                    _connection))
             {
-                objCommand.Parameters.AddWithValue("@MovieID", TotalTimesRented);
-                Connection.Open();
+                objCommand.Parameters.AddWithValue("@MovieID", totalTimesRented);
+                _connection.Open();
                 var reader = objCommand.ExecuteReader();
                 if (reader.HasRows) dt.Load(reader);
                 reader.Close();
-                Connection.Close();
+                _connection.Close();
             }
 
             return dt;
         }
 
-        public string AddOrUpdateCustomer(string CustID, string FirstName, string LastName, string Address,
-            string Phone, string AddOrUpdate)
+        public string AddOrUpdateCustomer(string custId, string firstName, string lastName, string address,
+            string phone, string addOrUpdate)
         {
             try
             {
                 //Add gets passed through the parameter
-                if (AddOrUpdate == "Add")
+                if (addOrUpdate == "Add")
                     //Create a query and open a connection to SQL Server
                     using (var queryCommand = new SqlCommand(
                         "INSERT INTO Customer (FirstName, LastName, Address, Phone)" +
-                        " VALUES (@FirstName, @LastName, @Address, @Phone)", Connection))
+                        " VALUES (@FirstName, @LastName, @Address, @Phone)", _connection))
                     {
                         //use parameters to prevent SQL injections
-                        queryCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                        queryCommand.Parameters.AddWithValue("@LastName", LastName);
-                        queryCommand.Parameters.AddWithValue("@Address", Address);
-                        queryCommand.Parameters.AddWithValue("@Phone", Phone);
+                        queryCommand.Parameters.AddWithValue("@FirstName", firstName);
+                        queryCommand.Parameters.AddWithValue("@LastName", lastName);
+                        queryCommand.Parameters.AddWithValue("@Address", address);
+                        queryCommand.Parameters.AddWithValue("@Phone", phone);
                         //create and open DB Connection
-                        Connection.Open();
+                        _connection.Open();
                         // add in the SQL
                         queryCommand.ExecuteNonQuery();
-                        Connection.Close();
+                        _connection.Close();
                     }
 
                 // update gets passed through the parameter
-                else if (AddOrUpdate == "Update")
+                else if (addOrUpdate == "Update")
                     //Create a object and open a connection to SQL Server
                     using (var objCommand = new SqlCommand("UPDATE Customer" +
                                                            " set FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone " +
-                                                           " where CustID = @CustID", Connection))
+                                                           " where CustID = @CustID", _connection))
                     {
                         //use parameters to prevent SQL injections
-                        objCommand.Parameters.AddWithValue("@FirstName", FirstName);
-                        objCommand.Parameters.AddWithValue("@LastName", LastName);
-                        objCommand.Parameters.AddWithValue("@Address", Address);
-                        objCommand.Parameters.AddWithValue("@Phone", Phone);
-                        objCommand.Parameters.AddWithValue("@CustID", CustID);
+                        objCommand.Parameters.AddWithValue("@FirstName", firstName);
+                        objCommand.Parameters.AddWithValue("@LastName", lastName);
+                        objCommand.Parameters.AddWithValue("@Address", address);
+                        objCommand.Parameters.AddWithValue("@Phone", phone);
+                        objCommand.Parameters.AddWithValue("@CustID", custId);
                         //create and open DB Connection
-                        Connection.Open();
+                        _connection.Open();
                         // add in the SQL
                         objCommand.ExecuteNonQuery();
-                        Connection.Close();
+                        _connection.Close();
                     }
 
-                return AddOrUpdate + " is Successful";
+                return addOrUpdate + " is Successful";
             }
             catch (Exception e)
             {
                 //need to get it to close a second time it jumps the first connection.close if ExecuteNonQuery fails.
-                Connection.Close();
+                _connection.Close();
                 return " has failed with " + e;
             }
         }
 
-        public string DeleteCustomer(string CustID, string DeleteCust)
+        public string DeleteCustomer(string custId, string deleteCust)
         {
             try
             {
                 //Delete gets passed through the parameter
-                if (DeleteCust == "Delete")
+                if (deleteCust == "Delete")
                 {
                     //Create a object and open a connection to SQL Server
-                    var queryCommand = new SqlCommand("DELETE FROM Customer" + " where CustID = @CustID", Connection);
+                    var queryCommand = new SqlCommand("DELETE FROM Customer" + " where CustID = @CustID", _connection);
                     //use parameters to prevent SQL injections
-                    queryCommand.Parameters.AddWithValue("CustID", CustID);
+                    queryCommand.Parameters.AddWithValue("CustID", custId);
                     //create and open DB Connection
-                    Connection.Open();
+                    _connection.Open();
                     queryCommand.ExecuteNonQuery();
-                    Connection.Close();
+                    _connection.Close();
                 }
 
                 return " Successfully Deleted";
@@ -206,43 +204,43 @@ namespace DSD_2_VideoStore
             catch (Exception e)
             {
                 //need to get it to close a second time it jumps the first connection.close if ExecuteNonQuery fails.
-                Connection.Close();
+                _connection.Close();
                 return " Failed " + e;
             }
         }
 
-        public string AddOrUpdateMovie(string MovieID, string Title, string Genre, string Year, string Rating,
-            string Plot, string Copies, string AddOrUpdate)
+        public string AddOrUpdateMovie(string movieId, string title, string genre, string year, string rating,
+            string plot, string copies, string addOrUpdate)
         {
             try
             {
-                var Rental_Cost = GetRentalCost(Year);
+                var rentalCost = GetRentalCost(year);
 
                 //Add gets passed through the parameter
-                if (AddOrUpdate == "Add")
+                if (addOrUpdate == "Add")
                 {
                     //Create a object and open a connection to SQL Server
                     // this puts the parameters into the code so that the data in the text boxes is added to the database
                     var queryCommand = new SqlCommand(
                         "INSERT INTO Movies (Title, Genre, Year, Rating, Plot, Copies, Rental_Cost) " +
-                        "VALUES  (@Title, @Genre, @Year, @Rating, @Plot, @Copies, @Rental_Cost)", Connection);
+                        "VALUES  (@Title, @Genre, @Year, @Rating, @Plot, @Copies, @Rental_Cost)", _connection);
 
                     //use parameters to prevent SQL injections
-                    queryCommand.Parameters.AddWithValue("@Title", Title);
-                    queryCommand.Parameters.AddWithValue("@Genre", Genre);
-                    queryCommand.Parameters.AddWithValue("@Year", Year);
-                    queryCommand.Parameters.AddWithValue("@Rating", Rating);
-                    queryCommand.Parameters.AddWithValue("@Plot", Plot);
-                    queryCommand.Parameters.AddWithValue("@Copies", Copies);
-                    queryCommand.Parameters.AddWithValue("@Rental_Cost", Rental_Cost);
+                    queryCommand.Parameters.AddWithValue("@Title", title);
+                    queryCommand.Parameters.AddWithValue("@Genre", genre);
+                    queryCommand.Parameters.AddWithValue("@Year", year);
+                    queryCommand.Parameters.AddWithValue("@Rating", rating);
+                    queryCommand.Parameters.AddWithValue("@Plot", plot);
+                    queryCommand.Parameters.AddWithValue("@Copies", copies);
+                    queryCommand.Parameters.AddWithValue("@Rental_Cost", rentalCost);
                     //create and open DB Connection
-                    Connection.Open();
+                    _connection.Open();
                     queryCommand
                         .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                    Connection.Close();
+                    _connection.Close();
                 }
                 // Update gets passed through the parameter
-                else if (AddOrUpdate == "Update")
+                else if (addOrUpdate == "Update")
                 {
                     //Create a object and open a connection to SQL Server
                     // this puts the parameters into the code so that the data in the text boxes is added to thedatabase
@@ -250,130 +248,130 @@ namespace DSD_2_VideoStore
                         new SqlCommand(
                             "UPDATE Movies" +
                             " set Title = @Title, Genre = @Genre, Year = @Year, Rating = @Rating, Plot = @Plot, Copies = @Copies, Rental_Cost = @Rental_Cost" +
-                            " where MovieID = @MovieID", Connection);
+                            " where MovieID = @MovieID", _connection);
                     //use parameters to prevent SQL injections
-                    queryCommand.Parameters.AddWithValue("@Title", Title);
-                    queryCommand.Parameters.AddWithValue("@Genre", Genre);
-                    queryCommand.Parameters.AddWithValue("@Year", Year);
-                    queryCommand.Parameters.AddWithValue("@Rating", Rating);
-                    queryCommand.Parameters.AddWithValue("@Plot", Plot);
-                    queryCommand.Parameters.AddWithValue("@Copies", Copies);
-                    queryCommand.Parameters.AddWithValue("@Rental_Cost", Rental_Cost);
-                    queryCommand.Parameters.AddWithValue("@MovieID", MovieID);
+                    queryCommand.Parameters.AddWithValue("@Title", title);
+                    queryCommand.Parameters.AddWithValue("@Genre", genre);
+                    queryCommand.Parameters.AddWithValue("@Year", year);
+                    queryCommand.Parameters.AddWithValue("@Rating", rating);
+                    queryCommand.Parameters.AddWithValue("@Plot", plot);
+                    queryCommand.Parameters.AddWithValue("@Copies", copies);
+                    queryCommand.Parameters.AddWithValue("@Rental_Cost", rentalCost);
+                    queryCommand.Parameters.AddWithValue("@MovieID", movieId);
                     //create and open DB Connection
-                    Connection.Open();
+                    _connection.Open();
                     queryCommand
                         .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                    Connection.Close(); // close connection to DB
+                    _connection.Close(); // close connection to DB
                 }
 
-                return AddOrUpdate + " Successful";
+                return addOrUpdate + " Successful";
             }
             catch (Exception e)
             {
                 //need to get it to close a second time it jumps the first connection.close if ExecuteNonQuery fails.
-                Connection.Close();
+                _connection.Close();
                 return " has failed with " + e;
             }
         }
 
-        public string DeleteMovies(string MovieID, string DeleteMovie)
+        public string DeleteMovies(string movieId, string deleteMovie)
         {
             try
             {
-                if (DeleteMovie == "Delete")
+                if (deleteMovie == "Delete")
                     //Create a object and open a connection to SQL Server
                     // this puts the parameters into the code so that the data in the text boxes is added to thedatabase
                     using (var objCommand =
-                        new SqlCommand("DELETE FROM Movies" + " where MovieID = @MovieID", Connection))
+                        new SqlCommand("DELETE FROM Movies" + " where MovieID = @MovieID", _connection))
                     {
                         // create params to prevent SQL injections
-                        objCommand.Parameters.AddWithValue("@MovieID", MovieID);
+                        objCommand.Parameters.AddWithValue("@MovieID", movieId);
                         //create and open DB Connection
-                        Connection.Open();
+                        _connection.Open();
                         objCommand
                             .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                        Connection.Close(); //close connection to DB
+                        _connection.Close(); //close connection to DB
                     }
 
-                return " Movie ID #" + MovieID + " Successfully Deleted";
+                return " Movie ID #" + movieId + " Successfully Deleted";
             }
             catch (Exception e)
             {
                 // need to get it to close a second time if it jumps the first connection.close
-                Connection.Close();
+                _connection.Close();
                 MessageBox.Show(e.Message);
                 return null;
             }
         }
 
-        public string IssueMovie(string MovieID, string CustID, DateTime DateRented)
+        public string IssueMovie(string movieId, string custId, DateTime dateRented)
         {
             try
             {
                 //Create a object and open a connection to SQL Server
                 var query =
                     "INSERT INTO RentedMovies (MovieIDFK, CustIDFK, DateRented) VALUES (@MovieID, @CustID, @DateRented)";
-                var queryCommand = new SqlCommand(query, Connection);
+                var queryCommand = new SqlCommand(query, _connection);
                 // create params to prevent SQL injections
-                queryCommand.Parameters.AddWithValue("@MovieID", MovieID);
-                queryCommand.Parameters.AddWithValue("@CustID", CustID);
-                queryCommand.Parameters.AddWithValue("@DateRented", DateRented);
+                queryCommand.Parameters.AddWithValue("@MovieID", movieId);
+                queryCommand.Parameters.AddWithValue("@CustID", custId);
+                queryCommand.Parameters.AddWithValue("@DateRented", dateRented);
                 //create and open DB Connection
-                Connection.Open();
+                _connection.Open();
                 queryCommand
                     .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                Connection.Close(); //close connection to the DB
+                _connection.Close(); //close connection to the DB
 
                 return " Movie Successfully Rented";
             }
             catch (Exception e)
             {
                 // need to get it to close a second time if it jumps the first connection.close
-                Connection.Close();
+                _connection.Close();
                 return " failed " + e;
             }
         }
 
-        public string ReturnMovie(string RMID, DateTime today)
+        public string ReturnMovie(string rmid, DateTime today)
         {
             try
             {
                 Today = DateTime.Now;
                 //Create a object and open a connection to SQL Server
                 var query = "UPDATE RentedMovies" + " set DateReturned = @today" + " WHERE RMID = @RMID";
-                var queryCommand = new SqlCommand(query, Connection);
+                var queryCommand = new SqlCommand(query, _connection);
                 // create parameters to prevent SQL injections
-                queryCommand.Parameters.AddWithValue("@RMID", RMID);
+                queryCommand.Parameters.AddWithValue("@RMID", rmid);
                 queryCommand.Parameters.AddWithValue("@today", today);
                 //create and open DB Connection
-                Connection.Open();
+                _connection.Open();
                 queryCommand
                     .ExecuteNonQuery(); //use NonQuery as it doesn't return any data its only going up to the server
-                Connection.Close(); //close connection to DB
+                _connection.Close(); //close connection to DB
 
                 return " Return is Successful";
             }
             catch (Exception e)
             {
                 //need to get it to close a second time as it jumps the first connection.close if ExecuteNonQuery fails.
-                Connection.Close();
+                _connection.Close();
                 return "Return has Failed with " + e;
             }
         }
 
-        public int GetRentalCost(string Year)
+        public int GetRentalCost(string year)
         {
             //Rental cost is $2 if the release year is more than 5 years ago
             //otherwise its $5
-            int target = Convert.ToInt16(Year);
-            int Rental_Cost;
+            int target = Convert.ToInt16(year);
+            int rentalCost;
             if (target > DateTime.Today.AddYears(-5).Year)
-                Rental_Cost = 5;
+                rentalCost = 5;
             else
-                Rental_Cost = 2;
+                rentalCost = 2;
 
-            return Rental_Cost;
+            return rentalCost;
         }
     }
 }
